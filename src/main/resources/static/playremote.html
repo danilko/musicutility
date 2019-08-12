@@ -84,14 +84,14 @@
             <h3>Current Music Files in List</h3>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action"
-                   ng-repeat="musicFile in newMusicPlayerSetting.currentMusicList.musicFiles" ng-click="updateMusicFile(musicFile)">{{musicFile.label}}</a>
+                   ng-repeat="musicFile in newMusicPlayerSetting.currentMusicList.musicFiles" ng-click="updateMusicFile(musicFile)" ng-class="{'active' :musicFile.id == configuration.currentMusicFile.id && newMusicPlayerSetting.currentMusicList.id == configuration.currentMusicList.id}">{{musicFile.label}}</a>
             </div>
         </div>
         <div class="col-lg-auto">
             <h3>Available Mixers</h3>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action"
-                   ng-repeat="musicMixer in configuration.musicMixers"  ng-click="updateMusicMixer(musicMixer)">{{musicMixer.name}} <br/> <small>{{musicMixer.description}}</small></a>
+                   ng-repeat="musicMixer in configuration.musicMixers"  ng-click="updateMusicMixer(musicMixer)" ng-class="{'active' :musicMixer.id == configuration.currentMusicMixer.id }">{{musicMixer.name}} <br/> <small>{{musicMixer.description}}</small></a>
             </div>
         </div>
     </div>

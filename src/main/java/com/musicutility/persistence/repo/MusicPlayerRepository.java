@@ -86,7 +86,7 @@ public class MusicPlayerRepository {
     }
 
 
-    public MusicPlayerSetting nextMusicFile()
+    public void nextMusicFile()
     {
         if(musicPlayerSetting.getCurrentMusicList().getMusicFiles().size() > 0) {
             List<MusicFile> musicFiles = getMusicPlayerSetting().getCurrentMusicList().getMusicFiles();
@@ -103,6 +103,7 @@ public class MusicPlayerRepository {
                         break;
                     }
                 }
+            }
 
                 currentMusicFileIndex = currentMusicFileIndex + 1;
 
@@ -110,7 +111,7 @@ public class MusicPlayerRepository {
                 {
                     currentMusicFileIndex = 0;
                 }
-            }
+
 
             synchronized (this) {
                 this.musicPlayerSetting.setCurrentMusicFile(musicFiles.get(currentMusicFileIndex));
@@ -118,7 +119,6 @@ public class MusicPlayerRepository {
                 saveConfiguration();
             }
         }
-        return musicPlayerSetting;
     }
 
     private void saveConfiguration()
