@@ -76,11 +76,9 @@ public class MusicPlayerRepository {
     public MusicPlayerSetting save(MusicPlayerSetting musicPlayerSetting)
     {
 
-        synchronized(this) {
             this.musicPlayerSetting = musicPlayerSetting;
 
             saveConfiguration();
-        }
 
         return musicPlayerSetting;
     }
@@ -112,12 +110,9 @@ public class MusicPlayerRepository {
                     currentMusicFileIndex = 0;
                 }
 
-
-            synchronized (this) {
-                this.musicPlayerSetting.setCurrentMusicFile(musicFiles.get(currentMusicFileIndex));
+                musicPlayerSetting.setCurrentMusicFile(musicFiles.get(currentMusicFileIndex));
 
                 saveConfiguration();
-            }
         }
     }
 
@@ -125,7 +120,6 @@ public class MusicPlayerRepository {
     {
         try {
             objectWriter.writeValue(new File(configurationPath), musicPlayerSetting);
-            currentMusicFileIndex = -1;
         }
         catch(Exception exception)
         {
