@@ -95,7 +95,7 @@ public class MusicPlayerRepository {
 
                 for(int index = 0; index < musicFiles.size(); index++ )
                 {
-                    if(StringUtils.compareIgnoreCase(musicFiles.get(currentMusicFileIndex).getId(), currentMusicFile.getId()) == 0)
+                    if(StringUtils.compareIgnoreCase(musicFiles.get(index).getId(), currentMusicFile.getId()) == 0)
                     {
                         currentMusicFileIndex = index;
                         break;
