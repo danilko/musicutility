@@ -115,7 +115,6 @@ public class MusicPlayerComponent  implements Runnable {
 
 
             } else {
-                LOGGER.info("cannot find target mixer");
                 musicPlayerState.setErrorMessage("cannot find target mixer");
             }
 
@@ -123,7 +122,6 @@ public class MusicPlayerComponent  implements Runnable {
         }
         catch(Exception exception)
         {
-            exception.printStackTrace();
             musicPlayerState.setErrorMessage(exception.toString());
         }
         finally {
@@ -139,7 +137,6 @@ public class MusicPlayerComponent  implements Runnable {
                 }
                 catch(IOException exception)
                 {
-                    exception.printStackTrace();
                     musicPlayerState.setErrorMessage(exception.toString());
                 }
             }
