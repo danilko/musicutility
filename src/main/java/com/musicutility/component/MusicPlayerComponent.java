@@ -141,6 +141,10 @@ public class MusicPlayerComponent  implements Runnable {
                 }
             }
 
+            // https://stackoverflow.com/questions/26538718/audioinputstream-close-not-releasing-resources-properly-is-there-a-workaround
+            // Force gc clean up to ensure not too many file descriptors are opened
+            System.gc();
+
             musicPlayerRepository.setMusicPlayerState(musicPlayerState);
         }
 

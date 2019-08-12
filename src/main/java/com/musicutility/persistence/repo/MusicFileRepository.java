@@ -14,7 +14,6 @@ public class MusicFileRepository {
     private List<MusicFile> musicFiles;
 
     public MusicFileRepository() {
-        musicFiles = null;
     }
 
     public void clearCache()

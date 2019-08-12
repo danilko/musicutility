@@ -28,6 +28,7 @@ public class MusicPlayerRepository {
 
     public MusicPlayerRepository()
     {
+        System.out.println("test");
         ObjectMapper mapper = new ObjectMapper();
 
         String path = System.getenv("MUSIC_UTILITY_LOCATION");
