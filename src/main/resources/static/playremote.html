@@ -1,0 +1,382 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link  type="text/css"  rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Music Utility</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="index.html">Music List Management</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="playremote.html">Play Remote</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="playstreaming.html">Play Local</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div ng-app="DemoApp" ng-controller="MusicStreamingController">
+    <h2>Remote Controller (Play Remote)</h2>
+    <div class="row">
+        <div class="col">
+                <h3>Current Playing:</h3>
+                <div ng-model="configuration.musicPlayerSetting.currentMusicList" >Music List: {{configuration.musicPlayerSetting.currentMusicList.label}}</div>
+                <div ng-model="configuration.musicPlayerSetting.currentMusicFile" >Music File: {{configuration.musicPlayerSetting.currentMusicFile.label}}</div>
+                <div ng-model="configuration.musicPlayerSetting.currentMusicMixer" >Mixer: {{configuration.musicPlayerSetting.currentMusicMixer.name}}</div>
+                <div >Elapsed Time: {{configuration.musicPlayerState.elaspsedTime}}</div>
+                <div >Elapsed Percentage: {{configuration.musicPlayerState.elapsedPercentage}}</div>
+                <div >Current State: {{configuration.musicPlayerState.playing}}</div>
+            </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col">
+            <h3>New Setting:</h3>
+            <div ng-model="newMusicPlayerSetting.currentMusicList" >Music List: {{newMusicPlayerSetting.currentMusicList.label}}</div>
+            <div ng-model="newMusicPlayerSetting.currentMusicFile">Music File: {{newMusicPlayerSetting.currentMusicFile.label}}</div>
+            <div ng-model="newMusicPlayerSetting.currentMusicMixer">Mixer: {{newMusicPlayerSetting.currentMusicMixer.name}}</div>
+            <div >Play:
+
+            <select
+                    class="form-control inputstl"
+                    ng-model="newMusicPlayerSetting.play"
+                    >
+                <option ng-value="true">Play</option> <option ng-value="false">Not Play</option>
+            </select>
+            <button type="button" class="btn btn-warning" ng-click="updateMusicPlayerSetting()">Update Music List</button>
+        </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+
+                <h3>Music List:</h3>
+                <select
+                        class="form-control inputstl"
+                        id="musicList" ng-model="newMusicPlayerSetting.currentMusicList"
+                        ng-options="musicList as musicList.label for musicList in configuration.musicLists track by musicList.id">
+                </select>
+                <br/>
+        </div>
+    </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-lg-auto">
+            <h3>Current Music Files in List</h3>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action"
+                   ng-repeat="musicFile in newMusicPlayerSetting.currentMusicList.musicFiles" ng-click="updateMusicFile(musicFile)">{{musicFile.label}}</a>
+            </div>
+        </div>
+        <div class="col-lg-auto">
+            <h3>Available Mixers</h3>
+            <div class="list-group list-group-flush">
+                <a class="list-group-item list-group-item-action"
+                   ng-repeat="musicMixer in configuration.musicMixers"  ng-click="updateMusicMixer(musicMixer)">{{musicMixer.name}} <br/> <small>{{musicMixer.description}}</small></a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script>
+        var app = angular.module("DemoApp", []);
+        app.factory('SharedDataService', function ($http) {
+
+            var configuration = {
+                musicLists: {},
+                musicMixers: {},
+                musicFiles: {},
+                musicPlayerState: {},
+                musicPlayerSetting: {},
+                currentMusicList: {},
+                currentMusicFile: {},
+                currentMusicMixer: {},
+                currentPlay:false,
+            };
+
+
+            getMusicLists = function () {
+                return $http.get("api/musiclists").then(
+                    function successCallback(response) {
+                        configuration.musicLists = response.data;
+                        configuration.currentMusicList = configuration.musicLists[0];
+                        configuration.currentMusicList = {};
+
+                        return configuration.musicLists;
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            };
+
+            getMusicPlayerState = function () {
+                return $http.get("api/musicplayer/state").then(
+                    function successCallback(response) {
+                        configuration.musicPlayerState = response.data;
+                        configuration.musicPlayerSetting = configuration.musicPlayerState.musicPlayerSetting;
+
+                        configuration.currentMusicMixer  = configuration.musicPlayerSetting.currentMusicMixer;
+                        configuration.currentMusicList  = configuration.musicPlayerSetting.currentMusicList;
+                        configuration.currentMusicFile  = configuration.musicPlayerSetting.currentMusicFile;
+                        configuration.currentPlay = configuration.musicPlayerSetting.play;
+
+                        return configuration.musicPlayerState;
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            };
+
+            updateMusicPlayerSetting = function (musicPlayerSetting) {
+                return $http.put("api/musicplayer/setting", JSON.stringify(musicPlayerSetting)).then(
+                    function successCallback(response) {
+                        getMusicPlayerState().then(function () {
+
+                            return configuration.musicPlayerSetting;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            };
+
+            getMusicFiles = function () {
+                return $http.get("api/musicfiles").then(
+                    function successCallback(response) {
+                        configuration.musicFiles = response.data;
+                        return configuration.musicFiles;
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            };
+
+            getMusicMixers = function () {
+                return $http.get("api/musicmixers").then(
+                    function successCallback(response) {
+                        configuration.musicMixers = response.data;
+                        return configuration.musicMixers;
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            };
+
+            deleteMusicList = function (musicListId) {
+                return $http.delete("api/musiclists/" + musicListId).then(
+                    function successCallback(response) {
+                        getMusicLists().then(function () {
+                            return configuration;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            }
+
+            createMusicList = function (musicList) {
+                return $http.post("api/musiclists", JSON.stringify(musicList)).then(
+                    function successCallback(response) {
+                        getMusicLists().then(function () {
+                            var findIndex = 0;
+                            angular.forEach(configuration.currentMusicList, function (musicList, index) {
+
+                                if (response.id == configuration.currentMusicFile.id) {
+                                    findIndex = index;
+                                }
+                            });
+                            configuration.currentMusicList = configuration.musicLists[findIndex];
+                            return configuration;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            }
+
+            updateMusicList = function (musicListId, musicList) {
+                return $http.put("api/musiclists/" + musicListId, JSON.stringify(musicList)).then(
+                    function successCallback(response) {
+                        getMusicLists().then(function () {
+                            var findIndex = 0;
+                            angular.forEach(configuration.currentMusicList, function (musicList, index) {
+
+                                if (musicList.id == configuration.currentMusicFile.id) {
+                                    findIndex = index;
+                                }
+                            });
+                            configuration.currentMusicList = configuration.musicLists[findIndex];
+                            return configuration;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            }
+
+            deleteMusicFile = function (musicListId, musicFileId) {
+                return $http.delete("api/musiclists/" + musicListId + "/musicfiles/" + musicFileId).then(
+                    function successCallback(response) {
+                        getMusicLists.then(function () {
+                            var findIndex = 0;
+                            angular.forEach(configuration.currentMusicList, function (musicList, index) {
+
+                                if (musicList.id == configuration.currentMusicFile.id) {
+                                    findIndex = index;
+                                }
+                            });
+                            configuration.currentMusicList = configuration.musicLists[findIndex];
+                            return configuration;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            }
+
+            addMusicFile = function (musicListId, musicFile) {
+                return $http.post("api/musiclists/" + musicListId + "/musicfiles/").then(
+                    function successCallback(response) {
+                        getMusicLists.then(function () {
+                            var findIndex = 0;
+                            angular.forEach(configuration.currentMusicList, function (musicList, index) {
+
+                                if (musicList.id == configuration.currentMusicFile.id) {
+                                    findIndex = index;
+                                }
+                            });
+                            configuration.currentMusicList = configuration.musicLists[findIndex];
+                            return configuration;
+                        });
+                    },
+                    function errorCallback(response) {
+                        console.log("Unable to perform get request");
+                    }
+                );
+            }
+
+
+            return {
+                getCurrentMusicFile: function () {
+                    return configuration.currentMusicFile;
+                },
+                setCurrentMusicFile: function (musicFile) {
+                    configuration.currentMusicFile = musicFile;
+                },
+                getCurrentMusicList: function () {
+                    return configuration.currentMusicList;
+                },
+                setCurrentMusicList: function (musicList) {
+                    configuration.currentMusicList = musicList;
+                },
+                getMusicLists: function () {
+                    return configuration.musicLists;
+                },
+                setMusicLists: function (musicLists) {
+                    configuration.musicLists = musicLists;
+                },
+                getConfiguration: function () {
+                    return configuration;
+                },
+                getMusicLists: getMusicLists,
+                getMusicMixers: getMusicMixers,
+                getMusicFiles: getMusicFiles,
+                updateMusicList: updateMusicList,
+                deleteMusicList: deleteMusicList,
+                createMusicList: createMusicList,
+                getMusicPlayerState: getMusicPlayerState,
+                updateMusicPlayerSetting: updateMusicPlayerSetting,
+            };
+        });
+
+
+        app.controller("MusicStreamingController", function ($scope, $q, $interval, SharedDataService) {
+
+
+            $scope.newMusicPlayerSetting = {
+                currentMusicFile : null,
+                currentMusicList : null,
+                currentMusicMixer : null,
+                play: false
+            };
+
+            $q.all([
+                SharedDataService.getMusicLists(),
+                SharedDataService.getMusicMixers(),
+                SharedDataService.getMusicPlayerState(),
+            ]).then(function (result) {
+                $scope.configuration = SharedDataService.getConfiguration();
+
+                $interval(SharedDataService.getMusicPlayerState, 2000);
+
+                $scope.configuration.currentMusicList = $scope.configuration.musicLists[0];
+
+                $scope.updateCurrentMusicList = function()
+                {
+                    SharedDataService.updateMusicList($scope.configuration.currentMusicList.id, $scope.configuration.currentMusicList);
+                }
+
+                $scope.deleteCurrentMusicList = function()
+                {
+                    SharedDataService.deleteMusicList($scope.configuration.currentMusicList.id);
+                }
+
+                $scope.updateMusicFile = function(targetMusicFile)
+                {
+                    $scope.newMusicPlayerSetting.currentMusicFile = targetMusicFile;
+                }
+
+
+                $scope.updateMusicMixer = function(targetMusicMixer)
+                {
+                    $scope.newMusicPlayerSetting.currentMusicMixer= targetMusicMixer;
+                }
+
+                $scope.updateMusicPlayerSetting = function()
+                {
+
+                    SharedDataService.updateMusicPlayerSetting( $scope.newMusicPlayerSetting).then(
+                        function(result)
+                        {
+                        }
+                    );
+
+                }
+
+
+            });
+
+        });
+
+    </script>
+</body>
+</html>
