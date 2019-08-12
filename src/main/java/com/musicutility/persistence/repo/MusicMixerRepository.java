@@ -27,6 +27,8 @@ public class MusicMixerRepository {
             musicMixerList.add(musicMixer);
         }
 
+        System.gc();
+
         return musicMixerList;
     }
 
@@ -42,6 +44,9 @@ public class MusicMixerRepository {
             musicMixer.setName(mixerInfo[id].getName());
             musicMixer.setVendor(mixerInfo[id].getVendor());
             musicMixer.setDescription(mixerInfo[id].getDescription());
+
+        System.gc();
+
 
         return musicMixer;
     }
