@@ -1,0 +1,12 @@
+[Unit]
+Description=Music Utility Web Application
+After=syslog.target
+
+[Service]
+SyslogIdentifier=musicutility	
+WorkingDirectory=/home/aws_cam/application/
+ExecStart=/bin/bash -c "export MUSIC_LOCATION='/srv/public/mount/'; java -jar /home/aws_cam/application/controller.jar"
+User=aws_cam
+Type=simple
+[Install]
+WantedBy=multi-user.target
