@@ -10,6 +10,20 @@ High Level Overview
 - Control remote music playing and output audio mixers through browser
 - Both music play method will loop through music list 
 
+Screenshots
+------
+Music List Management
+![Alt text](/../master/screenshots/music_list_management.png?raw=true "Music List Management")
+
+Play Remote
+![Alt text](/../master/screenshots/play_remote.png?raw=true "Play Remote")
+
+
+Play Streaming
+![Alt text](/../master/screenshots/play_streaming.png?raw=true "Play Streaming")
+
+
+
 Backend Technology
 ------
 - Spring Boot
