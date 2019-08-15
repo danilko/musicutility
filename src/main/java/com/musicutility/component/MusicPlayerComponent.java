@@ -34,8 +34,6 @@ public class MusicPlayerComponent  implements Runnable {
                     if(musicPlayerSetting.getCurrentMusicFile() != null && musicPlayerSetting.getCurrentMusicList() != null && musicPlayerSetting.getCurrentMusicMixer() != null) {
                         MusicPlayerComponent musicPlayerComponent = new MusicPlayerComponent(musicPlayerRepository);
                         musicPlayerComponent.play();
-
-                        musicPlayerRepository.nextMusicFile();
                     }
                     else
                     {
@@ -109,6 +107,8 @@ public class MusicPlayerComponent  implements Runnable {
                 musicPlayerState.setPlaying(true);
                 musicPlayerState.setFramePosition(0);
 
+                boolean nextMusic = true;
+
                 while ((byteRead = audioInputStream.read(byteBuffer)) != -1) {
                     sourceDataLine.write(byteBuffer, 0, byteRead);
                     musicPlayerState.setFramePosition( musicPlayerState.getFramePosition() + (byteRead / musicPlayerState.getFrameSize()));
@@ -116,10 +116,16 @@ public class MusicPlayerComponent  implements Runnable {
 
                     if ( musicPlayerRepository.getMusicPlayerSetting().getPlay() == false) {
 
+                        // As it is sent by stop command, stop at current music, not move to next one
+                        nextMusic = false;
                         break;
                     }
                 }
 
+                // Only switch if it is a complete music file play, not due to early stop
+                if(nextMusic) {
+                    musicPlayerRepository.nextMusicFile();
+                }
 
             } else {
                 musicPlayerState.setErrorMessage("cannot find target mixer");
