@@ -32,7 +32,25 @@
 </nav>
 
 <div ng-app="DemoApp" ng-controller="MusicStreamingController">
+
     <h2>Remote Controller (Play Remote)</h2>
+    <div class="modal" id="savingModal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Settings</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Process request..</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
                 <h3>Current Playing:</h3>
@@ -41,8 +59,9 @@
                 <div ng-model="configuration.musicPlayerSetting.currentMusicMixer" >Mixer: {{configuration.musicPlayerSetting.currentMusicMixer.name}}</div>
                 <div >Elapsed Time: {{configuration.musicPlayerState.elaspsedTime}}</div>
                 <div >Elapsed Percentage: {{configuration.musicPlayerState.elapsedPercentage}}</div>
-                <div >Current State: {{configuration.musicPlayerState.playing}}</div>
+                <div >Current Play State: {{configuration.musicPlayerState.playing}}</div>
                 <div >Error Message: {{configuration.musicPlayerState.errorMessage}}</div>
+            <button type="button" class="btn btn-warning" ng-click="toggleRemoteMusicPlay()"><span ng-bind="configuration.musicPlayerState.playing ? 'Stop' : 'Play'"></span> Remote Music</button>
             </div>
     </div>
     <br/>
@@ -53,14 +72,13 @@
             <div ng-model="newMusicPlayerSetting.currentMusicFile">Music File: {{newMusicPlayerSetting.currentMusicFile.label}}</div>
             <div ng-model="newMusicPlayerSetting.currentMusicMixer">Mixer: {{newMusicPlayerSetting.currentMusicMixer.name}}</div>
             <div >Play:
-
             <select
                     class="form-control inputstl"
                     ng-model="newMusicPlayerSetting.play"
                     >
-                <option ng-value="true">Play</option> <option ng-value="false">Not Play</option>
+                <option ng-value="true">Play</option> <option ng-value="false">Stop</option>
             </select>
-            <button type="button" class="btn btn-warning" ng-click="updateMusicPlayerSetting()">Update Music List</button>
+            <button type="button" class="btn btn-warning" ng-click="updateMusicPlayerSetting()">Update Setting</button>
         </div>
         </div>
     </div>
@@ -92,7 +110,7 @@
             <h3>Available Mixers</h3>
             <div class="list-group list-group-flush">
                 <a class="list-group-item list-group-item-action"
-                   ng-repeat="musicMixer in configuration.musicMixers"  ng-click="updateMusicMixer(musicMixer)" ng-class="{'active' :musicMixer.id == configuration.currentMusicMixer.id }">{{musicMixer.name}} <br/> <small>{{musicMixer.description}}</small></a>
+                   ng-repeat="musicMixer in configuration.musicMixers"  ng-click="updateMusicMixer(musicMixer)" ng-class="{'active' :musicMixer.name == configuration.currentMusicMixer.name}">{{musicMixer.name}} <br/> <small>{{musicMixer.description}}</small></a>
             </div>
         </div>
     </div>
@@ -324,11 +342,14 @@
         app.controller("MusicStreamingController", function ($scope, $q, $interval, SharedDataService) {
 
 
+            $('#savingModal').modal({ show: false})
+
+
             $scope.newMusicPlayerSetting = {
                 currentMusicFile : null,
                 currentMusicList : null,
                 currentMusicMixer : null,
-                play: false
+                play: true
             };
 
             $q.all([
@@ -337,6 +358,11 @@
                 SharedDataService.getMusicPlayerState(),
             ]).then(function (result) {
                 $scope.configuration = SharedDataService.getConfiguration();
+
+                $scope.newMusicPlayerSetting.currentMusicFile = JSON.parse(JSON.stringify($scope.configuration.musicPlayerSetting.currentMusicFile));
+                $scope.newMusicPlayerSetting.currentMusicList = JSON.parse(JSON.stringify($scope.configuration.musicPlayerSetting.currentMusicList));
+                $scope.newMusicPlayerSetting.currentMusicMixer = JSON.parse(JSON.stringify($scope.configuration.musicPlayerSetting.currentMusicMixer));
+                $scope.newMusicPlayerSetting.play = $scope.configuration.musicPlayerSetting.play;
 
                 $interval(SharedDataService.getMusicPlayerState, 2000);
 
@@ -365,10 +391,35 @@
 
                 $scope.updateMusicPlayerSetting = function()
                 {
-
+                    $('#savingModal').modal('show');
                     SharedDataService.updateMusicPlayerSetting( $scope.newMusicPlayerSetting).then(
                         function(result)
                         {
+                            $('#savingModal').modal('hide');
+                        }
+                    );
+
+                }
+
+                $scope.toggleRemoteMusicPlay = function()
+                {
+
+                    tempSetting = JSON.parse(JSON.stringify($scope.configuration.musicPlayerSetting));
+                    // Toggle the setting to opposite
+                    if(tempSetting.play)
+                    {
+                        tempSetting.play = false;
+                    }
+                    else
+                    {
+                        tempSetting.play = true;
+                    }
+
+                    $('#savingModal').modal('show');
+                    SharedDataService.updateMusicPlayerSetting(tempSetting).then(
+                        function(result)
+                        {
+                            $('#savingModal').modal('hide');
                         }
                     );
 

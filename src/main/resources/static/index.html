@@ -34,6 +34,23 @@
 <div ng-app="DemoApp" ng-controller="MusicStreamingController">
     <h2>Music List Management</h2>
 
+    <div class="modal" id="savingModal">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Update Settings</h4>
+            </div>
+
+            <div class="modal-body">
+                <p>Process request..</p>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+
         <div class="row">
             <div class="col">
                 <h3>New Music List Label</h3>
@@ -269,6 +286,7 @@
 
         app.controller("MusicStreamingController", function ($scope, $q, SharedDataService) {
 
+            $('#savingModal').modal({ show: false})
 
             $scope.newMusicList = {
                 "label":"",
@@ -285,12 +303,21 @@
 
                 $scope.updateCurrentMusicList = function()
                 {
-                    SharedDataService.updateMusicList($scope.configuration.currentMusicList.id, $scope.configuration.currentMusicList);
+                    $('#savingModal').modal('show');
+
+                    SharedDataService.updateMusicList($scope.configuration.currentMusicList.id, $scope.configuration.currentMusicList).then(
+                        function (result) {
+                            $('#savingModal').modal('hide');
+                        });
                 }
 
                 $scope.deleteCurrentMusicList = function()
                 {
-                    SharedDataService.deleteMusicList($scope.configuration.currentMusicList.id);
+                    $('#savingModal').modal('show');
+                    SharedDataService.deleteMusicList($scope.configuration.currentMusicList.id).then(
+                        function (result) {
+                            $('#savingModal').modal('hide');
+                        });
                 }
 
                 $scope.addMusicFile = function(targetMusicFile)

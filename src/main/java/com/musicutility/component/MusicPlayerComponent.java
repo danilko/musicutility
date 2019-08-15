@@ -29,14 +29,21 @@ public class MusicPlayerComponent  implements Runnable {
             try {
                 if (musicPlayerRepository != null) {
                     MusicPlayerSetting musicPlayerSetting = musicPlayerRepository.getMusicPlayerSetting();
-                    if (musicPlayerSetting != null && musicPlayerSetting.getPlay() && musicPlayerSetting.getCurrentMusicFile() != null && musicPlayerSetting.getCurrentMusicList() != null && musicPlayerSetting.getCurrentMusicMixer() != null) {
+                    if (musicPlayerSetting != null && musicPlayerSetting.getPlay()) {
+
+                    if(musicPlayerSetting.getCurrentMusicFile() != null && musicPlayerSetting.getCurrentMusicList() != null && musicPlayerSetting.getCurrentMusicMixer() != null) {
                         MusicPlayerComponent musicPlayerComponent = new MusicPlayerComponent(musicPlayerRepository);
                         musicPlayerComponent.play();
+
+                        musicPlayerRepository.nextMusicFile();
+                    }
+                    else
+                    {
+                        Thread.sleep(5000);
+                    }
                     } else {
                         Thread.sleep(5000);
                     }
-
-                    musicPlayerRepository.nextMusicFile();
                 }
             }
             catch(Exception exception)
@@ -69,7 +76,7 @@ public class MusicPlayerComponent  implements Runnable {
 
             musicPlayerState.setFrameSize(audioFormat.getFrameSize());
             // from https://stackoverflow.com/questions/35822296/how-to-keep-track-of-audio-playback-position
-            musicPlayerState.setBufferSize(audioFormat.getFrameSize() * 8192);
+            musicPlayerState.setBufferSize(audioFormat.getFrameSize() * 1024);
             musicPlayerState.setTotalFrames(audioInputStream.getFrameLength());
             musicPlayerState.setSampleRate(audioFormat.getSampleRate());
 
