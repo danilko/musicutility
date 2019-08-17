@@ -2,8 +2,6 @@ package com.musicutility.web;
 
 import com.musicutility.web.exception.MusicListIdMismatchException;
 import com.musicutility.web.exception.MusicListNotFoundException;
-import org.hibernate.exception.ConstraintViolationException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +22,6 @@ public class ControllerAPIExceptionHandler extends ResponseEntityExceptionHandle
 
     @ExceptionHandler({
             MusicListIdMismatchException.class,
-            ConstraintViolationException.class,
-            DataIntegrityViolationException.class
     })
     public ResponseEntity<Object> handleBadRequest(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex

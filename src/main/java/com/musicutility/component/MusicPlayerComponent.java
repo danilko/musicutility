@@ -63,7 +63,14 @@ public class MusicPlayerComponent  implements Runnable {
     }
 
     void play() {
+
         try {
+
+            // Try to clean up previous pulseaudio
+
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("kill $(ps aux | | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+
             File audioFile = new File(musicPlayerRepository.getMusicPlayerSetting().getCurrentMusicFile().getPath());
 
             audioInputStream = AudioSystem.getAudioInputStream(audioFile);
