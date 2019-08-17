@@ -7,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sound.sampled.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class MusicPlayerComponent  implements Runnable {
 
@@ -68,8 +70,29 @@ public class MusicPlayerComponent  implements Runnable {
 
             // Try to clean up previous pulseaudio
 
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("kill $(ps aux | | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+            ProcessBuilder processBuilder = new ProcessBuilder();
+
+            processBuilder.command("bash", "-c", "kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+
+            Process process = processBuilder.start();
+
+            StringBuilder output = new StringBuilder();
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(process.getInputStream()));
+
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line + "\n");
+            }
+
+            int exitVal = process.waitFor();
+            if (exitVal == 0) {
+                // Skip if success
+            } else {
+                musicPlayerState.setErrorMessage("cannot close previous session");
+            }
+
 
             File audioFile = new File(musicPlayerRepository.getMusicPlayerSetting().getCurrentMusicFile().getPath());
 
