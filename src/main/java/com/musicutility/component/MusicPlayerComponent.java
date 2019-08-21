@@ -72,7 +72,12 @@ public class MusicPlayerComponent  implements Runnable {
 
             ProcessBuilder processBuilder = new ProcessBuilder();
 
-            processBuilder.command("bash", "-c", "rm -rf ~/.config/pulse/*-default-* && kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+            // WORKAROUND CODE:
+            // clean up default (as the process maybe unplug and plug back, but pulseaudio may already cut over to other device)
+            // also there is delay after the device is plug back in, so kill pulseaudio will force new process to spawn up again and ensure latest one is added
+            // also restart pluseaudio
+            processBuilder.command("bash", "-c", "rm -rf ~/.config/pulse/*-default-sink && kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+
 
             Process process = processBuilder.start();
 
@@ -121,14 +126,13 @@ public class MusicPlayerComponent  implements Runnable {
 
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
+
             if (targetMixerInfo != null)
             {
-                sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-
                 sourceDataLine = (SourceDataLine) AudioSystem.getMixer(targetMixerInfo).getLine(info);
 
-                sourceDataLine.open(audioFormat);
-
+                //sourceDataLine.open(audioFormat);
+                sourceDataLine.open();
                 sourceDataLine.start();
 
                 byte[] byteBuffer = new byte[musicPlayerState.getBufferSize()];
@@ -173,10 +177,12 @@ public class MusicPlayerComponent  implements Runnable {
             if(sourceDataLine != null) {
                 sourceDataLine.drain();
                 sourceDataLine.close();
+                sourceDataLine = null;
             }
             if(audioInputStream != null) {
                 try {
                     audioInputStream.close();
+                    audioInputStream = null;
                 }
                 catch(IOException exception)
                 {
