@@ -72,7 +72,7 @@ public class MusicPlayerComponent  implements Runnable {
 
             ProcessBuilder processBuilder = new ProcessBuilder();
 
-            processBuilder.command("bash", "-c", "kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+            processBuilder.command("bash", "-c", "rm -rf ~/.config/pulse/*-default-* && kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
 
             Process process = processBuilder.start();
 
@@ -88,9 +88,9 @@ public class MusicPlayerComponent  implements Runnable {
 
             int exitVal = process.waitFor();
             if (exitVal == 0) {
-                // Skip if success
+                // Skip for now as force close may fail if there is no previous session
             } else {
-                musicPlayerState.setErrorMessage("cannot close previous session");
+                // Skip for now as force close may fail if there is no previous session
             }
 
 
