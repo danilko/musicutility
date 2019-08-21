@@ -23,6 +23,8 @@ public class MusicPlayerComponent  implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MusicPlayerComponent.class);
 
+    // From https://www.mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
+    private static String OS = System.getProperty("os.name").toLowerCase();
 
     @Override
     public void run() {
@@ -73,31 +75,34 @@ public class MusicPlayerComponent  implements Runnable {
             ProcessBuilder processBuilder = new ProcessBuilder();
 
             // WORKAROUND CODE:
+            // this is for linux only command
             // clean up default (as the process maybe unplug and plug back, but pulseaudio may already cut over to other device)
             // also there is delay after the device is plug back in, so kill pulseaudio will force new process to spawn up again and ensure latest one is added
             // also restart pluseaudio
-            processBuilder.command("bash", "-c", "rm -rf ~/.config/pulse/*-default-sink && kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
+            // this is an okay workaround under the scenario this utility is running as a service in a headless Linux account
+            if (OS.contains("nix")  || OS.contains("nux") || OS.contains("aix")) {
+                processBuilder.command("bash", "-c", "rm -rf ~/.config/pulse/*-default-sink && kill  $(ps aux | grep ${USER} | grep '[p]ulseaudio' | awk '{print $2}')");
 
 
-            Process process = processBuilder.start();
+                Process process = processBuilder.start();
 
-            StringBuilder output = new StringBuilder();
+                StringBuilder output = new StringBuilder();
 
-            BufferedReader reader = new BufferedReader(
-                    new InputStreamReader(process.getInputStream()));
+                BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(process.getInputStream()));
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line + "\n");
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line + "\n");
+                }
+
+                int exitVal = process.waitFor();
+                if (exitVal == 0) {
+                    // Skip for now as force close may fail if there is no previous session
+                } else {
+                    // Skip for now as force close may fail if there is no previous session
+                }
             }
-
-            int exitVal = process.waitFor();
-            if (exitVal == 0) {
-                // Skip for now as force close may fail if there is no previous session
-            } else {
-                // Skip for now as force close may fail if there is no previous session
-            }
-
 
             File audioFile = new File(musicPlayerRepository.getMusicPlayerSetting().getCurrentMusicFile().getPath());
 
