@@ -1,0 +1,20 @@
+<script src="app.component.spec.ts"></script>
+<script src="app-routing.module.ts"></script>
+<script src="../model/musicfile.ts"></script>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card my-5">
+        <div class="card-body">
+          <h2 class="card-title">{{ title }}</h2>
+          <ul class="nav">
+            <li class="nav-item"><a class="nav-link" routerLink="/musiclists">Manage Music List</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/playremote">Play Remote</a></li>
+            <li class="nav-item"><a class="nav-link" routerLink="/playlocal">Play Local</a></li>
+          </ul>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

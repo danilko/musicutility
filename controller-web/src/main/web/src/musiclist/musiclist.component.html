@@ -1,0 +1,15 @@
+<script src="../app/app-routing.module.ts"></script>
+<div class="card my-5">
+  <form [formGroup]="musiclistFormGroup" class="card-body">
+
+    <h3>Current Music List:</h3>
+    <select
+      class="form-control inputstl" formControlName="musiclistSelectControl">
+      <option [ngValue]="musiclist" *ngFor="let musiclist of musiclists"> {{musiclist.label}}</option>
+    </select>
+    <h3>Selectable Music Files:</h3>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let musicfile of musicfiles">{{musicfile.label}}</li>
+    </ul>
+  </form>
+</div>
