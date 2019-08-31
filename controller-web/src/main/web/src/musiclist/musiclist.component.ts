@@ -5,6 +5,7 @@ import {MusicListService} from '../service/musiclist.service';
 import {MusicFileService} from '../service/musicfile.service';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
+
 @Component({
   selector: 'app-musiclist',
   templateUrl: './musiclist.component.html',
@@ -12,7 +13,10 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 })
 export class MusicListComponent implements OnInit {
 
+
   musiclistFormGroup: FormGroup;
+
+  currentMusicList: MusicList;
 
   musiclists: MusicList[];
   musicfiles: MusicFile[];
@@ -21,6 +25,7 @@ export class MusicListComponent implements OnInit {
   constructor(private musiclistService: MusicListService,
               private musicfileService: MusicFileService,
               private formBuilder: FormBuilder) {
+    this.currentMusicList = new MusicList()
   }
 
   ngOnInit() {
