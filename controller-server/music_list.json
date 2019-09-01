@@ -1,0 +1,289 @@
+[ {
+  "id" : "uMSNYayFEViJqZxofuMaNYfhZtcsTiMw",
+  "label" : "Burn-in CD",
+  "musicFiles" : [ {
+    "id" : "ED8E6D933AAE3A004D3925CED1492D7E",
+    "label" : "01.Low_High Organ.wav",
+    "path" : "/srv/public/mount/Burn-in CD/01.Low_High Organ.wav"
+  }, {
+    "id" : "4B7FB726B58A6ED67B09EF5CF1EE1C44",
+    "label" : "02.Percussian high.wav",
+    "path" : "/srv/public/mount/Burn-in CD/02.Percussian high.wav"
+  }, {
+    "id" : "9EBF22374105B5A7004386E5B80641D6",
+    "label" : "03.Percussian low.wav",
+    "path" : "/srv/public/mount/Burn-in CD/03.Percussian low.wav"
+  }, {
+    "id" : "5CA809F3648615FA007B6D064E493D5A",
+    "label" : "04.Percussian very high.wav",
+    "path" : "/srv/public/mount/Burn-in CD/04.Percussian very high.wav"
+  }, {
+    "id" : "822946C8E730CCEBEB46B2B399B85CA1",
+    "label" : "05.Piano low_high.wav",
+    "path" : "/srv/public/mount/Burn-in CD/05.Piano low_high.wav"
+  }, {
+    "id" : "A47417AF15C40434248307F2E21A4D5C",
+    "label" : "06.Percussian very fast from small instruments.wav",
+    "path" : "/srv/public/mount/Burn-in CD/06.Percussian very fast from small instruments.wav"
+  }, {
+    "id" : "8D33D1B445780894DC7E021CA577036A",
+    "label" : "07.Flute picollo, bassax, tenorsax, and double bass.wav",
+    "path" : "/srv/public/mount/Burn-in CD/07.Flute picollo, bassax, tenorsax, and double bass.wav"
+  }, {
+    "id" : "479735B7DEF3487C9E023A8AB6B2B134",
+    "label" : "08.Sound library STS Television Production (part of STS Digital).wav",
+    "path" : "/srv/public/mount/Burn-in CD/08.Sound library STS Television Production (part of STS Digital).wav"
+  }, {
+    "id" : "648B3EE8A90423EF134C231CAE07B53A",
+    "label" : "09.Demagnetising CD track.wav",
+    "path" : "/srv/public/mount/Burn-in CD/09.Demagnetising CD track.wav"
+  } ]
+}, {
+  "id" : "MvltMgdcRfQaVAxczaBlCQVXAVwssRfn",
+  "label" : "Stereophile Test CD",
+  "musicFiles" : [ {
+    "id" : "939FD5E3FF81A4232DFDF4C04F0DF310",
+    "label" : "01 Track01.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/01 Track01.wav"
+  }, {
+    "id" : "DFB602B221E7F12369F5D63A7191F54A",
+    "label" : "02 Track02.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/02 Track02.wav"
+  }, {
+    "id" : "B120F37FF96E69A3F61F1C479336A33B",
+    "label" : "03 Track03.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/03 Track03.wav"
+  }, {
+    "id" : "2A12DF663B614283BF661B48120622ED",
+    "label" : "04 Track04.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/04 Track04.wav"
+  }, {
+    "id" : "22BEF8CB1858AC88D3EEA8E0A18E9605",
+    "label" : "05 Track05.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/05 Track05.wav"
+  }, {
+    "id" : "4CED0D61D81225523E969788D5A2F696",
+    "label" : "06 Track06.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/06 Track06.wav"
+  }, {
+    "id" : "27A185C626C912A6BF1B6B2167E452E1",
+    "label" : "07 Track07.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/07 Track07.wav"
+  }, {
+    "id" : "F08105EB01CFE475DC701686660679AE",
+    "label" : "08 Track08.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/08 Track08.wav"
+  }, {
+    "id" : "9629D91B8D903006B24B3F400AF348D5",
+    "label" : "09 Track09.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/09 Track09.wav"
+  }, {
+    "id" : "21FA0676F56E8EECEAD8F617F820CCB6",
+    "label" : "10 Track10.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/10 Track10.wav"
+  }, {
+    "id" : "BB31C243D6A80823EB91FF0CA5DFA422",
+    "label" : "11 Track11.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/11 Track11.wav"
+  }, {
+    "id" : "C7C63F68FD5E3E8E12E07F9503FE406B",
+    "label" : "12 Track12.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/12 Track12.wav"
+  }, {
+    "id" : "D4EA11CA3D9CD3971FD87A0C471821C6",
+    "label" : "13 Track13.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/13 Track13.wav"
+  }, {
+    "id" : "7B999940927DB1BCFBDC2A15ABC468D3",
+    "label" : "14 Track14.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/14 Track14.wav"
+  }, {
+    "id" : "A97AFD2232619C46EFE201219D26CF1C",
+    "label" : "15 Track15.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/15 Track15.wav"
+  }, {
+    "id" : "F01D02955D4CE1C5D7A8393DD26B16B4",
+    "label" : "16 Track16.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/16 Track16.wav"
+  }, {
+    "id" : "09667F15F660F5A6929F5E0D667F6267",
+    "label" : "17 Track17.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/17 Track17.wav"
+  }, {
+    "id" : "E1FA1065C7E5910E85DCCC2B332C3756",
+    "label" : "18 Track18.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/18 Track18.wav"
+  }, {
+    "id" : "CD49064197A8B8AC3E3A0B06DA1DE214",
+    "label" : "19 Track19.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/19 Track19.wav"
+  }, {
+    "id" : "36BBFC39494B5721271C497A1A20BD02",
+    "label" : "20 Track20.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/20 Track20.wav"
+  }, {
+    "id" : "76ACC1769B6978736FDBAB22790EC5AD",
+    "label" : "21 Track21.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/21 Track21.wav"
+  }, {
+    "id" : "EA98D45B36E10030A7CD389A36D827D1",
+    "label" : "22 Track22.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/22 Track22.wav"
+  }, {
+    "id" : "C53EFDF49437C1DB98F13F08F3F00598",
+    "label" : "23 Track23.wav",
+    "path" : "/srv/public/mount/Stereophile Test CD/23 Track23.wav"
+  } ]
+}, {
+  "id" : "flGBmeUqLEitjUfGGYDVvtYVeUwqwMlZ",
+  "label" : "Tiger Fish BOSE Test CD",
+  "musicFiles" : [ {
+    "id" : "06EEEAC407602E9982236F1416651C24",
+    "label" : "01 Track 1 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/01 Track 1 - Unknown artist.wav"
+  }, {
+    "id" : "5F98D611954CC4BEE50C5A7DDC544B33",
+    "label" : "02 Track 2 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/02 Track 2 - Unknown artist.wav"
+  }, {
+    "id" : "32AC1CDA5B1E68559E308BC9A3D50FFF",
+    "label" : "03 Track 3 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/03 Track 3 - Unknown artist.wav"
+  }, {
+    "id" : "C5A0122C94D770EB7E8FBCD1D5C1197D",
+    "label" : "04 Track 4 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/04 Track 4 - Unknown artist.wav"
+  }, {
+    "id" : "231D47ACA682238EAF1F8E7F8C591D61",
+    "label" : "05 Track 5 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/05 Track 5 - Unknown artist.wav"
+  }, {
+    "id" : "534BAEBC7861E0737D9A7ED33147D8F7",
+    "label" : "06 Track 6 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/06 Track 6 - Unknown artist.wav"
+  }, {
+    "id" : "4FF0BD2EAAB3BF21E2A4ECA099574B78",
+    "label" : "07 Track 7 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/07 Track 7 - Unknown artist.wav"
+  }, {
+    "id" : "AF5E11302D75B98F4C71723D6066179C",
+    "label" : "08 Track 8 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/08 Track 8 - Unknown artist.wav"
+  }, {
+    "id" : "7E75302D14971BE064A5B264D957FFC8",
+    "label" : "09 Track 9 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/09 Track 9 - Unknown artist.wav"
+  }, {
+    "id" : "95D9CFC758CDCAD51C536D7EED50A2CF",
+    "label" : "10 Track 10 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/10 Track 10 - Unknown artist.wav"
+  }, {
+    "id" : "9F268AF415F6023CA81B653591F2FEAF",
+    "label" : "11 Track 11 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/11 Track 11 - Unknown artist.wav"
+  }, {
+    "id" : "F649B29F03B4D1049161184EFDCAFFD8",
+    "label" : "12 Track 12 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/12 Track 12 - Unknown artist.wav"
+  }, {
+    "id" : "78EB63D8E96E7A3BE3F4AFC86536A70C",
+    "label" : "13 Track 13 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/13 Track 13 - Unknown artist.wav"
+  }, {
+    "id" : "E6FDBFDFFE3EBCCE68198B377BD1D254",
+    "label" : "14 Track 14 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/14 Track 14 - Unknown artist.wav"
+  }, {
+    "id" : "43005A09DFDE15B913B9CD3AE24F2296",
+    "label" : "15 Track 15 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/15 Track 15 - Unknown artist.wav"
+  }, {
+    "id" : "D834EDB15E5D7474F4A2358A8B0512AE",
+    "label" : "16 Track 16 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/16 Track 16 - Unknown artist.wav"
+  }, {
+    "id" : "E939189E247879ECE36A296F63529B70",
+    "label" : "17 Track 17 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/17 Track 17 - Unknown artist.wav"
+  }, {
+    "id" : "1DA9AEE6D2D5FC77FE0F63E636B84E83",
+    "label" : "18 Track 18 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/18 Track 18 - Unknown artist.wav"
+  }, {
+    "id" : "778000DC6769580548A320C7E58B7C64",
+    "label" : "19 Track 19 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/19 Track 19 - Unknown artist.wav"
+  } ]
+}, {
+  "id" : "moVsxdOrNvqidugZzbIRYWCtEinoChBN",
+  "label" : "柳瀨小鎮",
+  "musicFiles" : [ {
+    "id" : "9F268AF415F6023CA81B653591F2FEAF",
+    "label" : "11 Track 11 - Unknown artist.wav",
+    "path" : "/srv/public/mount/Tiger Fish BOSE Test CD/11 Track 11 - Unknown artist.wav"
+  }, {
+    "id" : "FEBA1668F43F188ACD9AE260DEDEFB3B",
+    "label" : "Application.class",
+    "path" : "/home/danilko/IdeaProjects/controller/controller-server/target/classes/com/musicutility/Application.class"
+  }, {
+    "id" : "7EDB6B9D5A079FE9462B921C31CA1C3E",
+    "label" : "MusicFileRepository.class",
+    "path" : "/home/danilko/IdeaProjects/controller/controller-server/target/classes/com/musicutility/persistence/repo/MusicFileRepository.class"
+  } ]
+}, {
+  "id" : "EetYHHxRDqghIhTfgkxcWadDDxkEoyir",
+  "label" : "BTM试音王1号《找到自己》12",
+  "musicFiles" : [ {
+    "id" : "A37D4E66ADB112A17951D6CB64E9A84A",
+    "label" : "(01) [杨茵茵] 01.爱江山更爱美人.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(01) [杨茵茵] 01.爱江山更爱美人.wav"
+  }, {
+    "id" : "ACD99D5EBFA644477CFC59EAD90D89B7",
+    "label" : "(02) [杨茵茵] 02.忘记谁.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(02) [杨茵茵] 02.忘记谁.wav"
+  }, {
+    "id" : "69511956D4594041B747C0F9CD5DA699",
+    "label" : "(03) [杨茵茵] 03.梨花又开放.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(03) [杨茵茵] 03.梨花又开放.wav"
+  }, {
+    "id" : "CA2F76F329C5CBBAC942C1837BBFEB87",
+    "label" : "(04) [杨茵茵] 04.我找到了自己.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(04) [杨茵茵] 04.我找到了自己.wav"
+  }, {
+    "id" : "7BF471D3CA44B492EFA527F0A4659425",
+    "label" : "(05) [杨茵茵] 05.太湖美.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(05) [杨茵茵] 05.太湖美.wav"
+  }, {
+    "id" : "14383A766BDA5713F43A15625B514FE8",
+    "label" : "(06) [杨茵茵] 06.情难枕.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(06) [杨茵茵] 06.情难枕.wav"
+  }, {
+    "id" : "B49E7F469A9BD457BA8FA36664F99FBC",
+    "label" : "(07) [杨茵茵] 07.When A Child Is Born.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(07) [杨茵茵] 07.When A Child Is Born.wav"
+  }, {
+    "id" : "E51A4CEBE278431C7375424F26665E5E",
+    "label" : "(08) [杨茵茵] 08.山不转水转.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(08) [杨茵茵] 08.山不转水转.wav"
+  }, {
+    "id" : "6EDC3B4B44CA79B8850CE089AD8AC8E1",
+    "label" : "(09) [杨茵茵] 09.梅兰，梅兰，我爱你.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(09) [杨茵茵] 09.梅兰，梅兰，我爱你.wav"
+  }, {
+    "id" : "63C607986B039CEDA841871C60271C5D",
+    "label" : "(10) [杨茵茵] 10.乡恋.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(10) [杨茵茵] 10.乡恋.wav"
+  }, {
+    "id" : "984233AD7385B5923E7FF523F25AED3F",
+    "label" : "(11) [杨茵茵] 11.小眼睛的姑娘.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(11) [杨茵茵] 11.小眼睛的姑娘.wav"
+  }, {
+    "id" : "EF333A90FFC7E680BF5399362D6006C1",
+    "label" : "(12) [杨茵茵] 12.浪子心声.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(12) [杨茵茵] 12.浪子心声.wav"
+  }, {
+    "id" : "DB6FA19EC4B93CA0333CB215E515DE12",
+    "label" : "(13) [杨茵茵] 13.葬花吟.wav",
+    "path" : "/srv/public/mount/BTM试音王1号《找到自己》/(13) [杨茵茵] 13.葬花吟.wav"
+  } ]
+} ]

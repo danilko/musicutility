@@ -111,8 +111,6 @@ public class MusicPlayerRepository {
                 }
 
                 musicPlayerSetting.setCurrentMusicFile(musicFiles.get(currentMusicFileIndex));
-
-                saveConfiguration();
         }
     }
 

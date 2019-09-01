@@ -6,12 +6,29 @@
     <div class="col">
       <div class="card my-5">
         <div class="card-body">
-          <h2 class="card-title">{{ title }}</h2>
-          <ul class="nav">
-            <li class="nav-item"><a class="nav-link" routerLink="/musiclists">Manage Music List</a></li>
-            <li class="nav-item"><a class="nav-link" routerLink="/playremote">Play Remote</a></li>
-            <li class="nav-item"><a class="nav-link" routerLink="/playlocal">Play Local</a></li>
-          </ul>
+          <h1 class="card-title">{{ title }}</h1>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <span><h3>Menu</h3></span>
+
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item  routerLink="/musiclists">
+              <mat-icon>my_library_music</mat-icon>
+              <span>Manage Music List</span>
+            </button>
+
+            <button mat-menu-item routerLink="/playlocal">
+              <mat-icon>playlist_play</mat-icon>
+              <span>Streaming Music</span>
+            </button>
+
+            <button mat-menu-item routerLink="/playremote">
+              <mat-icon>settings_remote</mat-icon>
+              <span>Remote Control</span>
+            </button>
+          </mat-menu>
+
+
         </div>
       </div>
       <router-outlet></router-outlet>

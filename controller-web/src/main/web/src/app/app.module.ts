@@ -15,17 +15,33 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import {MatMenuModule} from '@angular/material/menu';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 
 import { MusicListComponent } from '../musiclist/musiclist.component';
+
+import {
+  NewMusicListDialog,
+  DeleteMusicListDialog,
+  MusicFileInfoDialog,
+  LoadingDialog
+} from "../dialog/dialog-component";
+
+
 import { MusicListService } from '../service/musiclist.service';
+import { MusicFileService } from "../service/musicfile.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MusicListComponent
+    MusicListComponent,
+    NewMusicListDialog,
+    DeleteMusicListDialog,
+    MusicFileInfoDialog,
+    LoadingDialog
   ],
   imports: [
     BrowserModule,
@@ -40,10 +56,18 @@ import { MusicListService } from '../service/musiclist.service';
     MatListModule,
     MatInputModule,
     MatMenuModule,
+    MatDialogModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule
 
   ],
-  providers: [MusicListService],
-  bootstrap: [AppComponent]
+  providers: [MusicListService, MusicFileService],
+  bootstrap: [AppComponent],
+  entryComponents: [
+    NewMusicListDialog,
+    DeleteMusicListDialog,
+    MusicFileInfoDialog,
+    LoadingDialog
+  ]
 })
 export class AppModule { }

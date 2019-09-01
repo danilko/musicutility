@@ -21,4 +21,12 @@ export class MusicListService {
   createMusicList(musiclist : MusicList): Observable<MusicList>{
     return this.http.post<MusicList>(this.serviceUrl, musiclist);
   }
+
+  updateMusicList(musiclist : MusicList): Observable<MusicList>{
+    return this.http.put<MusicList>(this.serviceUrl + "/" + musiclist.id, musiclist);
+  }
+
+  deleteMusicList(musiclist : MusicList): Observable<any>{
+    return this.http.delete(this.serviceUrl + "/" + musiclist.id);
+  }
 }

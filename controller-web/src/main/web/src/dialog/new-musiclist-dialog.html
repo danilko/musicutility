@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>New Music List</h1>
+<div mat-dialog-content>
+  <p>Music List Label</p>
+  <mat-form-field class="musicutiltiy-mat-full-width">
+    <input matInput [(ngModel)]="data.label">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
