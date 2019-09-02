@@ -51,5 +51,6 @@ Following is an example setup
 export MUSIC_LOCATION='/srv/public/mount/)
 # from controller-server/target
 java -jar controller.jar
+# one can the access at http://localhost:8080/
 ```
 
