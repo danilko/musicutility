@@ -31,14 +31,25 @@ Backend Technology
 
 Frontend Technology
 ------
-- Angular JS
+- Angular/Angular Material
 - Bootstrap
+
+Compile Setting
+------
+Following is an example setup
+```
+# need to install latest npm/angular CLI (detail in controller-web/src/main/web/)
+# in git root folder
+mvn clean package
+# collect the final artificat controller.jar from controller-server/target
+```
 
 Start Up Setting
 ------
 Following is an example setup
 ```
 export MUSIC_LOCATION='/srv/public/mount/)
+# from controller-server/target
 java -jar controller.jar
 ```
 
