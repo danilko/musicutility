@@ -1,0 +1,37 @@
+<script src="app.component.spec.ts"></script>
+<script src="app-routing.module.ts"></script>
+<script src="../model/musicfile.ts"></script>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="card my-5">
+        <div class="card-body">
+          <h1 class="card-title">{{ title }}</h1>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <span><h3>Menu</h3></span>
+
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item  routerLink="/musiclists">
+              <mat-icon>my_library_music</mat-icon>
+              <span>Manage Music List</span>
+            </button>
+
+            <button mat-menu-item routerLink="/musicstreaming">
+              <mat-icon>playlist_play</mat-icon>
+              <span>Streaming Music</span>
+            </button>
+
+            <button mat-menu-item routerLink="/musicremote">
+              <mat-icon>settings_remote</mat-icon>
+              <span>Remote Control</span>
+            </button>
+          </mat-menu>
+
+
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
