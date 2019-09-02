@@ -1,8 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {FormControl, Validators} from '@angular/forms';
 import {FormBuilder, FormGroup} from "@angular/forms";
 
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 
 import {MusicList} from '../model/musiclist';
 import {MusicFile} from '../model/musicfile';
@@ -23,9 +22,6 @@ import {
 })
 export class MusicListComponent implements OnInit {
 
-
-  musiclistFormGroup: FormGroup;
-
   currentMusicList: MusicList;
 
   musiclists: MusicList[];
@@ -34,7 +30,6 @@ export class MusicListComponent implements OnInit {
 
   constructor(private musiclistService: MusicListService,
               private musicfileService: MusicFileService,
-              private formBuilder: FormBuilder,
               public dialog: MatDialog) {
     this.currentMusicList = new MusicList();
   }
@@ -144,8 +139,9 @@ export class MusicListComponent implements OnInit {
     }
   }
 
-  setCurrentMusicList(musiclist: MusicList) {
-    this.currentMusicList = JSON.parse(JSON.stringify(musiclist));
+  changeMusicList() {
+    // Made a different copy of the object (to not impact original object)
+    this.currentMusicList = JSON.parse(JSON.stringify(this.currentMusicList));
   }
 
   updateMusicList(musiclist: MusicList){

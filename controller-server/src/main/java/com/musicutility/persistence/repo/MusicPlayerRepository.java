@@ -130,7 +130,7 @@ public class MusicPlayerRepository {
 
             double fractionalProgress = (int) Math.round((double) musicPlayerState.getFramePosition() / (double) musicPlayerState.getTotalFrames() * 100);
 
-            musicPlayerState.setElapsedPercentage(fractionalProgress + "%");
+            musicPlayerState.setElapsedPercentage(fractionalProgress);
 
             int secondsElapsed = (int) Math.round((double) musicPlayerState.getFramePosition()  / musicPlayerState.getSampleRate());
 

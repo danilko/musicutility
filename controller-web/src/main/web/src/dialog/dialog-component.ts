@@ -3,6 +3,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 import {MusicList} from "../model/musiclist";
 import {MusicFile} from "../model/musicfile";
+import {MusicMixer} from "../model/musicmixer";
 
 @Component({
   selector: 'new-musiclist-dialog',
@@ -52,6 +53,23 @@ export class MusicFileInfoDialog {
     this.dialogRef.close();
   }
 }
+
+@Component({
+  selector: 'musicmixer-info-dialog',
+  templateUrl: '../dialog/musicmixer-info-dialog.html',
+})
+export class MusicMixerInfoDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<MusicMixerInfoDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: MusicMixer) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}
+
 
 
 @Component({

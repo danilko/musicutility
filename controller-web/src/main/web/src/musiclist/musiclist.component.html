@@ -1,10 +1,13 @@
 <script src="../app/app-routing.module.ts"></script>
 <div class="card my-5">
+  <br>
+  <h2>Music List Management</h2>
+  <br>
 
   <mat-form-field class="musicutiltiy-mat-full-width">
     <mat-label>Current Music List</mat-label>
-    <mat-select >
-      <mat-option [value]="musiclist" *ngFor="let musiclist of musiclists" (onSelectionChange)="setCurrentMusicList(musiclist)">
+    <mat-select [(ngModel)] = "currentMusicList">
+      <mat-option [value]="musiclist" *ngFor="let musiclist of musiclists" (onSelectionChange)="changeMusicList()">
         {{musiclist.label}}
       </mat-option>
     </mat-select>

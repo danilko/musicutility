@@ -17,7 +17,7 @@ public class MusicPlayerState implements Serializable {
     private long framePosition;
 
     private String elaspsedTime;
-    private String elapsedPercentage;
+    private double elapsedPercentage;
 
     private String errorMessage;
 
@@ -26,7 +26,6 @@ public class MusicPlayerState implements Serializable {
     public MusicPlayerState() {
         super();
         elaspsedTime = "";
-        elapsedPercentage = "";
 
         isPlaying = false;
         musicPlayerSetting = null;
@@ -57,11 +56,11 @@ public class MusicPlayerState implements Serializable {
         this.elaspsedTime = elaspsedTime;
     }
 
-    public String getElapsedPercentage() {
+    public double getElapsedPercentage() {
         return elapsedPercentage;
     }
 
-    public void setElapsedPercentage(String elapsedPercentage) {
+    public void setElapsedPercentage(double elapsedPercentage) {
         this.elapsedPercentage = elapsedPercentage;
     }
 
@@ -120,23 +119,35 @@ public class MusicPlayerState implements Serializable {
 
         MusicPlayerState that = (MusicPlayerState) o;
 
+        if (frameSize != that.frameSize) return false;
+        if (totalFrames != that.totalFrames) return false;
+        if (Double.compare(that.sampleRate, sampleRate) != 0) return false;
+        if (bufferSize != that.bufferSize) return false;
+        if (framePosition != that.framePosition) return false;
+        if (Double.compare(that.elapsedPercentage, elapsedPercentage) != 0) return false;
         if (isPlaying != that.isPlaying) return false;
         if (musicPlayerSetting != null ? !musicPlayerSetting.equals(that.musicPlayerSetting) : that.musicPlayerSetting != null)
             return false;
         if (elaspsedTime != null ? !elaspsedTime.equals(that.elaspsedTime) : that.elaspsedTime != null) return false;
-        if (elapsedPercentage != null ? !elapsedPercentage.equals(that.elapsedPercentage) : that.elapsedPercentage != null)
-            return false;
         return errorMessage != null ? errorMessage.equals(that.errorMessage) : that.errorMessage == null;
     }
 
     @Override
     public int hashCode() {
-        int result = musicPlayerSetting != null ? musicPlayerSetting.hashCode() : 0;
+        int result;
+        long temp;
+        result = musicPlayerSetting != null ? musicPlayerSetting.hashCode() : 0;
+        result = 31 * result + (int) (frameSize ^ (frameSize >>> 32));
+        result = 31 * result + (int) (totalFrames ^ (totalFrames >>> 32));
+        temp = Double.doubleToLongBits(sampleRate);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + bufferSize;
+        result = 31 * result + (int) (framePosition ^ (framePosition >>> 32));
         result = 31 * result + (elaspsedTime != null ? elaspsedTime.hashCode() : 0);
-        result = 31 * result + (elapsedPercentage != null ? elapsedPercentage.hashCode() : 0);
+        temp = Double.doubleToLongBits(elapsedPercentage);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (errorMessage != null ? errorMessage.hashCode() : 0);
         result = 31 * result + (isPlaying ? 1 : 0);
         return result;
     }
-
 }

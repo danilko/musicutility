@@ -1,0 +1,95 @@
+
+<script src="../app/app-routing.module.ts"></script>
+<div class="card my-5">
+  <br>
+  <h2>Music Remote Control</h2>
+  <br>
+
+  <div *ngIf="currentMusicPlayerState && currentMusicPlayerState.musicPlayerSetting && currentMusicPlayerState.musicPlayerSetting.currentMusicList">
+    <mat-slider
+      class="musicutiltiy-mat-full-width"
+      [max]=100
+      [min]=0
+      [step]=1
+      [thumbLabel]=true
+      [(ngModel)]="currentMusicPlayerState.elapsedPercentage">
+    </mat-slider>
+    <div>{{currentMusicPlayerState.elaspsedTime}} ({{currentMusicPlayerState.elapsedPercentage}}.00%)</div>
+
+    <button mat-icon-button aria-label="Play" *ngIf="currentMusicPlayerState.playing == false" (click)="updateMusicPlayerSetting(currentMusicFile, currentMusicMixer, true)">
+      <mat-icon>play_arrow</mat-icon>
+    </button>
+    <button mat-icon-button aria-label="Stop" *ngIf="currentMusicPlayerState.playing == true" (click)="updateMusicPlayerSetting(currentMusicFile, currentMusicMixer, false)">
+      <mat-icon>pause</mat-icon>
+    </button>
+
+    <h4>Current Playing: {{currentMusicPlayerState.musicPlayerSetting.currentMusicFile.label}}</h4>
+    <div>Music List: {{currentMusicPlayerState.musicPlayerSetting.currentMusicList.label}}</div>
+    <div>Mixer: {{currentMusicPlayerState.musicPlayerSetting.currentMusicMixer.name}}</div>
+    <div> Elapsed Percentage: {{currentMusicPlayerState.elapsedPercentage}}</div>
+    <div>Current Play State: {{currentMusicPlayerState.playing}}</div>
+    <div *ngIf="currentMusicPlayerState.errorMessage" >Error Message: {{currentMusicPlayerState.errorMessage}}</div>
+  </div>
+
+  <br>
+
+  <mat-form-field class="musicutiltiy-mat-full-width">
+    <mat-label>Current Music List</mat-label>
+    <mat-select [(ngModel)] = "currentMusicList">
+      <mat-option [value]="musiclist" *ngFor="let musiclist of musiclists" (onSelectionChange)="changeMusicList">
+        {{musiclist.label}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br>
+
+  <mat-list  *ngIf="currentMusicList.label" class="musicutiltiy-mat-full-width">
+    <h3 mat-subheader>Current Music Files in List</h3>
+    <mat-list-item *ngFor="let musicfile of currentMusicList.musicFiles">
+      <mat-icon mat-list-icon *ngIf="currentMusicFile.id == musicfile.id && (currentMusicPlayerState.musicPlayerSetting.currentMusicList && currentMusicPlayerState.musicPlayerSetting.currentMusicList.id == currentMusicList.id)">play_arrow</mat-icon>
+      <mat-icon mat-list-icon *ngIf="currentMusicFile.id != musicfile.id || (!currentMusicPlayerState.musicPlayerSetting.currentMusicList || currentMusicPlayerState.musicPlayerSetting.currentMusicList.id != currentMusicList.id)">music_video</mat-icon>
+      <h4 mat-line>{{musicfile.label}}</h4>
+      <p mat-line> {{musicfile.path}} </p>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openMusicFileInfoDialog(musicfile)">
+          <mat-icon>info</mat-icon>
+          <span>Info</span>
+        </button>
+        <button mat-menu-item (click)="updateMusicPlayerSetting(musicfile, currentMusicMixer, true)"  *ngIf="currentMusicFile.id != musicfile.id || (!currentMusicPlayerState.musicPlayerSetting.currentMusicList || currentMusicPlayerState.musicPlayerSetting.currentMusicList.id != currentMusicList.id)">
+          <mat-icon>play_arrow</mat-icon>
+          <span>Play</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+  </mat-list>
+
+  <mat-list  *ngIf="currentMusicList.label" class="musicutiltiy-mat-full-width">
+    <h3 mat-subheader>Current Music Mixers</h3>
+    <mat-list-item *ngFor="let musicmixer of musicmixers">
+      <mat-icon mat-list-icon *ngIf="currentMusicMixer.name == musicmixer.name">play_arrow</mat-icon>
+      <mat-icon mat-list-icon *ngIf="currentMusicMixer.name != musicmixer.name">speaker</mat-icon>
+      <h4 mat-line>{{musicmixer.name}}</h4>
+      <p mat-line> {{musicmixer.vendor}} </p>
+      <p mat-line> {{musicmixer.description}} </p>
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openMusicMixerInfoDialog(musicmixer)">
+          <mat-icon>info</mat-icon>
+          <span>Info</span>
+        </button>
+        <button mat-menu-item (click)="updateMusicPlayerSetting(currentMusicFile, musicmixer, true)" *ngIf="currentMusicMixer.name != musicmixer.name">
+          <mat-icon>play_arrow</mat-icon>
+          <span>Play</span>
+        </button>
+      </mat-menu>
+    </mat-list-item>
+  </mat-list>
+
+
+</div>
