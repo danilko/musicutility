@@ -85,3 +85,19 @@ export class LoadingDialog {
   }
 
 }
+
+@Component({
+  selector: 'error-dialog',
+  templateUrl: '../dialog/error-dialog.html',
+})
+export class ErrorDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ErrorDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: String) {
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

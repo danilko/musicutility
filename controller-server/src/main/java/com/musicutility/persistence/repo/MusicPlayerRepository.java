@@ -26,8 +26,12 @@ public class MusicPlayerRepository {
 
     private int currentMusicFileIndex;
 
+    private double targetElapsedPercentage;
+
     public MusicPlayerRepository()
     {
+        targetElapsedPercentage = -1;
+
         ObjectMapper mapper = new ObjectMapper();
 
         String path = System.getenv("MUSIC_UTILITY_LOCATION");
@@ -73,12 +77,14 @@ public class MusicPlayerRepository {
         return musicPlayerSetting;
     }
 
-    public MusicPlayerSetting save(MusicPlayerSetting musicPlayerSetting)
+    public MusicPlayerSetting save(MusicPlayerSetting musicPlayerSetting, boolean filePersistence)
     {
 
             this.musicPlayerSetting = musicPlayerSetting;
 
-            saveConfiguration();
+            if(filePersistence) {
+                saveConfiguration();
+            }
 
         return musicPlayerSetting;
     }
@@ -146,6 +152,17 @@ public class MusicPlayerRepository {
             musicPlayerState.setElaspsedTime(String.format("%02d:%02d/%02d:%02d", elaspsedMinutes, elapsedSeconds, totalMinutes, totalSeconds));
 
         return musicPlayerState;
+    }
+
+    public double getTargetElapsedPercentage()
+    {
+        return targetElapsedPercentage;
+    }
+
+    public void setTargetElapsedPercentage(double targetElapsedPercentage) {
+        synchronized(this) {
+            this.targetElapsedPercentage = targetElapsedPercentage;
+        }
     }
 
     public void setMusicPlayerState(MusicPlayerState musicPlayerState) {

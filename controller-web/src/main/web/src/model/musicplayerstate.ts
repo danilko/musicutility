@@ -2,14 +2,14 @@ import {MusicPlayerSetting} from "./musicplayersetting";
 
 export class MusicPlayerState{
   musicPlayerSetting: MusicPlayerSetting;
-  frameSize: bigint;
-  totalFrames: bigint;
-  sampleRate: bigint;
-  bufferSize: bigint;
-  framePosition: bigint;
-  elaspsedTime: string;
-  elapsedPercentage: string;
-  errorMessage: string;
-  playing: boolean;
+  frameSize: number;
+  totalFrames: number;
+  sampleRate: number;
+  bufferSize: number;
+  framePosition: number;
+  elaspsedTime: number;
+  elapsedPercentage: number;
+  errorMessage: number;
+  playing: number;
 
 }

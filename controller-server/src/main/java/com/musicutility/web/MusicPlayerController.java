@@ -27,7 +27,7 @@ public class MusicPlayerController {
 
     @PutMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
-    public MusicPlayerSetting create(@RequestBody MusicPlayerSetting musicPlayerSetting) {
+    public MusicPlayerSetting create(@RequestBody MusicPlayerSetting musicPlayerSetting, @RequestParam("elapsedpercentage") String elapsedPercentage) {
 
         MusicPlayerSetting newMusicPlayerSetting = new MusicPlayerSetting();
 
@@ -71,11 +71,33 @@ public class MusicPlayerController {
 
         newMusicPlayerSetting.setCurrentMusicMixer(currentMusicMixer);
 
+        double targetElapsedPercentage = 0;
 
-        musicPlayerRepository.save(newMusicPlayerSetting);
+        if(newMusicPlayerSetting.getPlay() && elapsedPercentage != null)
+        {
+            try{
+                targetElapsedPercentage = Double.parseDouble(elapsedPercentage);
+
+                if(targetElapsedPercentage < 0 || targetElapsedPercentage >= 100)
+                {
+                    targetElapsedPercentage = 0;
+                }
+            }
+            catch (Exception exception)
+            {
+                targetElapsedPercentage = 0;
+            }
+
+        }
+
+        musicPlayerRepository.setTargetElapsedPercentage(targetElapsedPercentage);
+
+
+        musicPlayerRepository.save(newMusicPlayerSetting, true);
 
         return newMusicPlayerSetting;
     }
+
 
 
     @GetMapping("/setting")

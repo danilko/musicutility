@@ -32,6 +32,7 @@ import {
   MusicFileInfoDialog,
   MusicMixerInfoDialog,
   LoadingDialog,
+  ErrorDialog,
 } from "../dialog/dialog-component";
 
 
@@ -47,6 +48,7 @@ import { MusicPlayerService } from "../service/musicplayer.service";
     MusicFileInfoDialog,
     MusicMixerInfoDialog,
     LoadingDialog,
+    ErrorDialog,
     MusicListComponent,
     MusicStreamingComponent,
     MusicRemoteComponent
@@ -77,7 +79,8 @@ import { MusicPlayerService } from "../service/musicplayer.service";
     DeleteMusicListDialog,
     MusicFileInfoDialog,
     MusicMixerInfoDialog,
-    LoadingDialog
+    LoadingDialog,
+    ErrorDialog
   ]
 })
 export class AppModule { }

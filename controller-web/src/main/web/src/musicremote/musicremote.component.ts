@@ -12,7 +12,8 @@ import {MusicMixerService} from '../service/musicmixer.service';
 import {
   LoadingDialog,
   MusicFileInfoDialog,
-  MusicMixerInfoDialog
+  MusicMixerInfoDialog,
+  ErrorDialog
 } from "../dialog/dialog-component";
 import {MusicPlayerState} from "../model/musicplayerstate";
 import {MusicPlayerService} from "../service/musicplayer.service";
@@ -44,6 +45,7 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
     this.currentMusicFile = new MusicFile();
     this.currentMusicMixer = new MusicMixer();
     this.currentPlaySetting = false;
+
   }
 
 
@@ -67,28 +69,44 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
     this.currentMusicFile = new MusicFile();
   }
 
-  updateMusicPlayerSetting(musicfile: MusicFile, musicmixer : MusicMixer, play:boolean) {
+  updateMusicPlayerSetting(musiclist: MusicList, musicfile: MusicFile, musicmixer : MusicMixer, play : boolean, elapsedTargetPercentage : number) {
     let updateMusicPlayerSetting = new MusicPlayerSetting();
-    updateMusicPlayerSetting.currentMusicList = this.currentMusicList;
-    updateMusicPlayerSetting.currentMusicMixer = musicmixer;
+
+    if(musiclist == null) {
+      const dialogRef = this.dialog.open(ErrorDialog, {
+        width: "80%",
+        data: "Music Mixer cannot be modified unless first play a music file in a music list"
+      });
+
+      return;
+    }
+    updateMusicPlayerSetting.currentMusicList = musiclist;
+
+
+
+    if(musicfile == null) {
+        updateMusicPlayerSetting.currentMusicFile = updateMusicPlayerSetting.currentMusicList[0];
+      }
+      else
+      {
+        updateMusicPlayerSetting.currentMusicFile = musicfile;
+      }
+
+    if(musicmixer == null) {
+      updateMusicPlayerSetting.currentMusicMixer = this.currentMusicPlayerState.musicPlayerSetting.currentMusicMixer;
+    }
+    else {
+      updateMusicPlayerSetting.currentMusicMixer = musicmixer;
+    }
+
     updateMusicPlayerSetting.play = play;
-
-    if(musicfile.id == null || musicfile.id == "")
-    {
-      updateMusicPlayerSetting.currentMusicFile = updateMusicPlayerSetting.currentMusicList[0];
-    }
-    else
-    {
-      updateMusicPlayerSetting.currentMusicFile = musicfile;
-    }
-
 
     const loadingDialogRef = this.dialog.open(LoadingDialog, {
       width: "80%",
       data: ""
     });
 
-    this.musicplayerService.updateMusicPlayerSetting(updateMusicPlayerSetting).subscribe( data => {
+    this.musicplayerService.updateMusicPlayerSetting(updateMusicPlayerSetting, elapsedTargetPercentage).subscribe( data => {
       this.getMusicPlayerState();
       loadingDialogRef.close();
     });

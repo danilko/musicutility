@@ -15,8 +15,8 @@ export class MusicPlayerService {
     this.serviceUrl = '/api/musicplayer'
   }
 
-  updateMusicPlayerSetting(musicPlayerSetting : MusicPlayerSetting): Observable<any>{
-    return this.http.put<MusicPlayerSetting>(this.serviceUrl + "/setting", musicPlayerSetting);
+  updateMusicPlayerSetting(musicPlayerSetting : MusicPlayerSetting, elapsedTargetPercentage : number): Observable<any>{
+    return this.http.put<MusicPlayerSetting>(this.serviceUrl + "/setting?elapsedpercentage=" + elapsedTargetPercentage, musicPlayerSetting);
   }
 
   getMusicPlayerState(): Observable<MusicPlayerState>{

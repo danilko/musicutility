@@ -112,11 +112,15 @@ public class MusicPlayerComponent  implements Runnable {
 
             Mixer.Info[] mixerInfos = AudioSystem.getMixerInfo();
 
+            long totalFrames = audioInputStream.getFrameLength();
+
             musicPlayerState.setFrameSize(audioFormat.getFrameSize());
             // from https://stackoverflow.com/questions/35822296/how-to-keep-track-of-audio-playback-position
             musicPlayerState.setBufferSize(audioFormat.getFrameSize() * 1024);
-            musicPlayerState.setTotalFrames(audioInputStream.getFrameLength());
+            musicPlayerState.setTotalFrames(totalFrames);
             musicPlayerState.setSampleRate(audioFormat.getSampleRate());
+
+            double targetElapsePerecentage = musicPlayerRepository.getTargetElapsedPercentage();
 
             Mixer.Info targetMixerInfo = null;
 
@@ -131,6 +135,7 @@ public class MusicPlayerComponent  implements Runnable {
 
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
+            long newFramePosition = 0;
 
             if (targetMixerInfo != null)
             {
@@ -149,9 +154,15 @@ public class MusicPlayerComponent  implements Runnable {
                 boolean nextMusic = true;
 
                 while ((byteRead = audioInputStream.read(byteBuffer)) != -1) {
-                    sourceDataLine.write(byteBuffer, 0, byteRead);
-                    musicPlayerState.setFramePosition( musicPlayerState.getFramePosition() + (byteRead / musicPlayerState.getFrameSize()));
+                    newFramePosition = newFramePosition + (byteRead / musicPlayerState.getFrameSize());
+
+                    musicPlayerState.setFramePosition(newFramePosition);
+
                     musicPlayerRepository.setMusicPlayerState(musicPlayerState);
+                    if(targetElapsePerecentage == 0 || ((int) Math.round((double) newFramePosition / (double) totalFrames * 100)) >= targetElapsePerecentage)
+                    {
+                        sourceDataLine.write(byteBuffer, 0, byteRead);
+                    }
 
                     if ( musicPlayerRepository.getMusicPlayerSetting().getPlay() == false) {
 
@@ -170,6 +181,8 @@ public class MusicPlayerComponent  implements Runnable {
                 musicPlayerState.setErrorMessage("cannot find target mixer");
             }
 
+            // Reset music setting to 0
+            musicPlayerRepository.setTargetElapsedPercentage(0);
 
         }
         catch(Exception exception)
