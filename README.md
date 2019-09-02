@@ -32,7 +32,6 @@ Backend Technology
 Frontend Technology
 ------
 - Angular/Angular Material
-- Bootstrap
 
 Compile Setting
 ------
