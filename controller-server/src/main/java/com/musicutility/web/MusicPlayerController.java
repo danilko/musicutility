@@ -27,7 +27,8 @@ public class MusicPlayerController {
 
     @PutMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
-    public MusicPlayerSetting create(@RequestBody MusicPlayerSetting musicPlayerSetting, @RequestParam("elapsedpercentage") String elapsedPercentage) {
+    public MusicPlayerSetting update(@RequestBody MusicPlayerSetting musicPlayerSetting, @RequestParam("elapsedpercentage") String elapsedPercentage) {
+
 
         MusicPlayerSetting newMusicPlayerSetting = new MusicPlayerSetting();
 
@@ -87,13 +88,35 @@ public class MusicPlayerController {
             {
                 targetElapsedPercentage = 0;
             }
-
         }
 
-        musicPlayerRepository.setTargetElapsedPercentage(targetElapsedPercentage);
+        synchronized (this) {
+            // If it is try to play on top of play, then stop the current music first
+            // So it will immediately start new music/position
+            if (newMusicPlayerSetting.getPlay() && musicPlayerRepository.getMusicPlayerState().getPlaying()) {
+                newMusicPlayerSetting.setPlay(false);
+                musicPlayerRepository.save(newMusicPlayerSetting, false);
 
+                while(musicPlayerRepository.getMusicPlayerState().getPlaying())
+                {
+                    // Sleep for 0.5 second if first retry is not working
+                    try {
+                        Thread.sleep(500);
+                    }
+                    catch (Exception exception)
+                    {
+                        // Ignore error as in worst case will just continue loop through
+                    }
+                }
 
-        musicPlayerRepository.save(newMusicPlayerSetting, true);
+                // Set back the input state again
+                newMusicPlayerSetting.setPlay(true);
+            }
+
+            // Set the target percentage at here, as if it is stop in previous, it will set to empty again, so need to set immediately before start
+            musicPlayerRepository.setTargetElapsedPercentage(targetElapsedPercentage);
+            musicPlayerRepository.save(newMusicPlayerSetting, true);
+        }
 
         return newMusicPlayerSetting;
     }
