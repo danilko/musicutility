@@ -12,7 +12,9 @@ import {
   NewMusicListDialog,
   DeleteMusicListDialog,
   MusicFileInfoDialog,
-  LoadingDialog
+  LoadingDialog,
+  ErrorDialog,
+  MusicMixerInfoDialog
 } from "../dialog/dialog-component";
 
 @Component({
@@ -41,7 +43,7 @@ export class MusicListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(newMusicList => {
-      if (newMusicList != null) {
+      if (newMusicList != null && newMusicList.label != null && newMusicList.label != "" ) {
 
 
         const loadingDialogRef = this.dialog.open(LoadingDialog, {
@@ -57,6 +59,15 @@ export class MusicListComponent implements OnInit {
               loadingDialogRef.close();
             });
         });
+      }
+      else
+      {
+        const dialogRef = this.dialog.open(ErrorDialog, {
+          width: "80%",
+          data: "Invalid music list Label: "
+        });
+
+        return;
       }
     });
 
@@ -145,6 +156,15 @@ export class MusicListComponent implements OnInit {
   }
 
   updateMusicList(musiclist: MusicList){
+
+    if (musiclist == null || musiclist.label == null || musiclist.label == "" ) {
+      const dialogRef = this.dialog.open(ErrorDialog, {
+        width: "80%",
+        data: "Invalid music list Label: "
+      });
+
+      return;
+    }
 
     const loadingDialogRef = this.dialog.open(LoadingDialog, {
       width: "80%",
