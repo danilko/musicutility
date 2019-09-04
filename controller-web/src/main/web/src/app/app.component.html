@@ -6,10 +6,8 @@
     <div class="col">
       <div class="card my-5">
         <div class="card-body">
-          <h1 class="card-title">{{ title }}</h1>
           <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <span><h3>Menu</h3></span>
-
+            <h1 class="card-title">{{ title }}</h1>
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item  routerLink="/musiclists">

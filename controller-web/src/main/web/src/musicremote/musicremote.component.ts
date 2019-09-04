@@ -108,8 +108,16 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
 
     this.musicplayerService.updateMusicPlayerSetting(updateMusicPlayerSetting, elapsedTargetPercentage).subscribe( data => {
       this.getMusicPlayerState();
-      loadingDialogRef.close();
+      
+      this.delay(5000).then(any=>{
+        this.getMusicPlayerState();
+        loadingDialogRef.close();
+      });
     });
+  }
+
+  async delay(ms: number) {
+    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
   }
 
   getMusicPlayerState(){
