@@ -5,7 +5,7 @@
   <h2>Music Remote Control</h2>
   <br>
 
-  <div *ngIf="currentMusicPlayerState && currentMusicPlayerState.musicPlayerSetting && currentMusicPlayerState.musicPlayerSetting.currentMusicList">
+  <div *ngIf="currentMusicPlayerState && currentMusicPlayerState.musicPlayerSetting && currentMusicPlayerState.musicPlayerSetting.currentMusicList && currentMusicPlayerState.musicPlayerSetting.currentMusicMixer">
     <mat-slider
       class="musicutiltiy-mat-full-width"
       [max]=100
@@ -72,8 +72,8 @@
   <mat-list  *ngIf="currentMusicList.label" class="musicutiltiy-mat-full-width">
     <h3 mat-subheader>Current Music Mixers</h3>
     <mat-list-item *ngFor="let musicmixer of musicmixers">
-      <mat-icon mat-list-icon *ngIf="currentMusicMixer.name == musicmixer.name">play_arrow</mat-icon>
-      <mat-icon mat-list-icon *ngIf="currentMusicMixer.name != musicmixer.name">speaker</mat-icon>
+      <mat-icon mat-list-icon *ngIf="currentMusicMixer == null || currentMusicMixer.name == musicmixer.name">play_arrow</mat-icon>
+      <mat-icon mat-list-icon *ngIf="currentMusicMixer != null && currentMusicMixer.name != musicmixer.name">speaker</mat-icon>
       <h4 mat-line>{{musicmixer.name}}</h4>
       <p mat-line> {{musicmixer.vendor}} </p>
       <p mat-line> {{musicmixer.description}} </p>
