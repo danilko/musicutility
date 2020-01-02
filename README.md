@@ -23,6 +23,9 @@ Play Streaming
 ![Alt text](/../master/screenshots/play_streaming.png?raw=true "Play Streaming")
 
 
+Architecture
+![Alt text](/../master/screenshots/architecture.png?raw=true "Architecture")
+
 
 Backend Technology
 ------
