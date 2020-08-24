@@ -2,6 +2,8 @@
 # Apache-2.0 License
 # https://github.com/danilko/musicutility
 
+# Reference: https://fedoraproject.org/wiki/Architectures/ARM/gpio
+
 import gpiod
 import time
 import sys
