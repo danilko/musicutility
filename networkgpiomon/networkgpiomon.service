@@ -1,0 +1,13 @@
+[Unit]
+Description=Network GPIO Monitor
+After=syslog.target
+
+[Service]
+SyslogIdentifier=networkgpiomon	
+WorkingDirectory=/home/musicutility/application/networkgpiomon
+ExecStart=/bin/bash -c 'python /home/musicutility/application/networkgpiomon/networkgpiomon.py 2 18'
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target
