@@ -67,6 +67,10 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
                 try {
                     while (true) {
                         Thread.sleep(5000);
+                        if (!comPort.isOpen()) {
+                            break;
+                        }
+
                     }
                 } catch (Exception exception) {
                     LOGGER.info("remote exception OUTPUT " + exception.toString());
@@ -75,7 +79,13 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
                 comPort.removeDataListener();
                 comPort.closePort();
             }
+            // Sleep for 2 seconds to wait for next re - check
+            try {
+                Thread.sleep(2000);
+            } catch (Exception exception) {
+            }
         }
+
     }
 
     @Override
@@ -281,12 +291,10 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
             // Stop network service
             // this is an okay workaround under the scenario this utility is running as a service in a headless Linux account
             if (OS.contains("nix") || OS.contains("nux") || OS.contains("aix")) {
-                String command = "nmcli networking ";
+                String command = "/usr/bin/nmcli networking ";
                 if (toggle) {
                     command = command + "on";
-                }
-                else
-                {
+                } else {
                     command = command + "off";
                 }
 
