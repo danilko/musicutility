@@ -8,27 +8,25 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
-import java.util.logging.Logger;
 
 @Component
 public class MusicPlayerThreadPoolTaskScheduler {
     @Autowired
-    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+    private ThreadPoolTaskScheduler threadPoolTaskSchedulerMusicPlayer;
 
     @Autowired
     private MusicPlayerRepository musicPlayerRepository;
 
     @PostConstruct
     public void scheduleRunnableWithCronTrigger() {
-        System.out.println("trigger schedule");
-        threadPoolTaskScheduler.schedule(new MusicPlayerComponent(musicPlayerRepository), new Date());
+        threadPoolTaskSchedulerMusicPlayer.schedule(new MusicPlayerComponent(musicPlayerRepository), new Date());
     }
 
     @Bean
-    public ThreadPoolTaskScheduler threadPoolTaskScheduler() {
+    public ThreadPoolTaskScheduler threadPoolTaskSchedulerMusicPlayer() {
         ThreadPoolTaskScheduler threadPoolTaskScheduler = new ThreadPoolTaskScheduler();
         threadPoolTaskScheduler.setPoolSize(1);
-        threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskScheduler");
+        threadPoolTaskScheduler.setThreadNamePrefix("ThreadPoolTaskSchedulerMusicPlayer");
         return threadPoolTaskScheduler;
     }
 

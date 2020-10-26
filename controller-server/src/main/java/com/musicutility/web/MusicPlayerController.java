@@ -28,8 +28,6 @@ public class MusicPlayerController {
     @PutMapping("/setting")
     @ResponseStatus(HttpStatus.OK)
     public MusicPlayerSetting update(@RequestBody MusicPlayerSetting musicPlayerSetting, @RequestParam("elapsedpercentage") String elapsedPercentage) {
-
-
         MusicPlayerSetting newMusicPlayerSetting = new MusicPlayerSetting();
 
         MusicList musicList = musicListRepository.findById(musicPlayerSetting.getCurrentMusicList().getId());
@@ -44,26 +42,26 @@ public class MusicPlayerController {
 
         if (musicList.getMusicFiles().size() > 0)
         {
-        for (MusicFile musicFile : musicList.getMusicFiles()){
-            if(StringUtils.compareIgnoreCase(musicFile.getId(), musicPlayerSetting.getCurrentMusicFile().getId()) == 0) {
-                currentMusicFile = musicFile;
+            for (MusicFile musicFile : musicList.getMusicFiles()){
+                if(StringUtils.compareIgnoreCase(musicFile.getId(), musicPlayerSetting.getCurrentMusicFile().getId()) == 0) {
+                    currentMusicFile = musicFile;
+                }
             }
-        }
 
-        if(currentMusicFile == null)
-        {
-            currentMusicFile = musicList.getMusicFiles().get(0);
-        }
+            if(currentMusicFile == null)
+            {
+                currentMusicFile = musicList.getMusicFiles().get(0);
+            }
         }
 
 
         List<MusicMixer> musicMixers =  musicMixerRepository.findAll();
         MusicMixer currentMusicMixer = null;
-            for (MusicMixer musicMixer : musicMixers){
-                if(StringUtils.compareIgnoreCase(musicMixer.getId(), musicPlayerSetting.getCurrentMusicMixer().getId()) == 0) {
-                    currentMusicMixer = musicMixer;
-                }
+        for (MusicMixer musicMixer : musicMixers){
+            if(StringUtils.compareIgnoreCase(musicMixer.getId(), musicPlayerSetting.getCurrentMusicMixer().getId()) == 0) {
+                currentMusicMixer = musicMixer;
             }
+        }
 
 
         newMusicPlayerSetting.setCurrentMusicFile(currentMusicFile);
@@ -74,7 +72,7 @@ public class MusicPlayerController {
 
         double targetElapsedPercentage = 0;
 
-        if(newMusicPlayerSetting.getPlay() && elapsedPercentage != null)
+        if(elapsedPercentage != null)
         {
             try{
                 targetElapsedPercentage = Double.parseDouble(elapsedPercentage);
@@ -120,7 +118,6 @@ public class MusicPlayerController {
 
         return newMusicPlayerSetting;
     }
-
 
 
     @GetMapping("/setting")

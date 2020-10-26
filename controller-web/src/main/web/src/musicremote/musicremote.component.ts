@@ -34,6 +34,7 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
   musicmixers: MusicMixer[];
 
   currentPlaySetting:boolean;
+  previousStop:boolean;
 
   intervalHolder: any;
 
@@ -45,7 +46,7 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
     this.currentMusicFile = new MusicFile();
     this.currentMusicMixer = new MusicMixer();
     this.currentPlaySetting = false;
-
+    this.previousStop = false;
   }
 
 
@@ -69,6 +70,12 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
     this.currentMusicFile = new MusicFile();
   }
 
+  updateMusicPlayerSettingwithStop(musiclist: MusicList, musicfile: MusicFile, musicmixer : MusicMixer, play : boolean, elapsedTargetPercentage : number)
+  {
+    this.previousStop = true;
+    this.updateMusicPlayerSetting(musiclist, musicfile, musicmixer, play, elapsedTargetPercentage);
+  }
+
   updateMusicPlayerSetting(musiclist: MusicList, musicfile: MusicFile, musicmixer : MusicMixer, play : boolean, elapsedTargetPercentage : number) {
     let updateMusicPlayerSetting = new MusicPlayerSetting();
 
@@ -81,8 +88,6 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
       return;
     }
     updateMusicPlayerSetting.currentMusicList = musiclist;
-
-
 
     if(musicfile == null) {
         updateMusicPlayerSetting.currentMusicFile = updateMusicPlayerSetting.currentMusicList[0];
@@ -106,9 +111,16 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
       data: ""
     });
 
+    // For the stop function to ensure click stop will route to begin
+    if(play == true && this.previousStop == true)
+    {
+      this.previousStop = false;
+      elapsedTargetPercentage = 0;
+    }
+
     this.musicplayerService.updateMusicPlayerSetting(updateMusicPlayerSetting, elapsedTargetPercentage).subscribe( data => {
       this.getMusicPlayerState();
-      
+
       this.delay(5000).then(any=>{
         this.getMusicPlayerState();
         loadingDialogRef.close();
