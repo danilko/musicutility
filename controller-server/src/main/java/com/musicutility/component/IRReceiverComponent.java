@@ -202,7 +202,7 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
 
     private void setFastForward(MusicPlayerSetting setting, MusicPlayerState state) {
         if (setting.getPlay()) {
-            double elapsedPercentage = state.getElapsedPercentage() - 5;
+            double elapsedPercentage = state.getElapsedPercentage() + 5;
 
             if (elapsedPercentage > 100) {
                 elapsedPercentage = 100;
@@ -214,7 +214,7 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
 
     private void setFastBackward(MusicPlayerSetting setting, MusicPlayerState state) {
         if (setting.getPlay()) {
-            double elapsedPercentage = state.getElapsedPercentage() + 5;
+            double elapsedPercentage = state.getElapsedPercentage() - 5;
 
             if (elapsedPercentage < 0) {
                 elapsedPercentage = 0;
