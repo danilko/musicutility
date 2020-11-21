@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.musicutility</groupId>
   <artifactId>controller-web</artifactId>
+  <packaging>pom</packaging>
 
   <parent>
     <groupId>com.musicutility</groupId>
     <artifactId>controller-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
   </parent>
   <build>
     <plugins>
@@ -28,6 +28,13 @@
             <id>install node and npm</id>
             <goals>
               <goal>install-node-and-npm</goal>
+            </goals>
+          </execution>
+          <execution>
+            <!-- Save the material icon locally hosted https://stackoverflow.com/a/46529620 -->
+            <id>npm install material-design-icons-iconfont --save</id>
+            <goals>
+              <goal>npm</goal>
             </goals>
           </execution>
           <execution>

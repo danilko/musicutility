@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>controller.server</artifactId>
+    <artifactId>controller-server</artifactId>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>com.musicutility</groupId>
         <artifactId>controller-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-SNAPSHOT</version>
     </parent>
 
     <properties>
@@ -20,6 +20,13 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>controller-web</artifactId>
+            <version>${project.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -35,10 +42,9 @@
             <version>1.13</version>
         </dependency>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>controller.web</artifactId>
-            <version>${project.version}</version>
-            <scope>runtime</scope>
+            <groupId>com.fazecast</groupId>
+            <artifactId>jSerialComm</artifactId>
+            <version>[2.0.0,3.0.0)</version>
         </dependency>
     </dependencies>
     <build>
@@ -59,6 +65,36 @@
                             <resources>
                                 <resource>
                                     <directory>${project.parent.basedir}/controller-web/src/main/web/dist/musicutility/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-material-design-icons-iconfont</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/resources/node_modules/material-design-icons-iconfont/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.parent.basedir}/controller-web/src/main/web/node_modules/material-design-icons-iconfont/</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-resources-bootstrap</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/classes/resources/node_modules/bootstrap/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.parent.basedir}/controller-web/src/main/web/node_modules/bootstrap/</directory>
                                 </resource>
                             </resources>
                         </configuration>
