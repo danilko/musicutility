@@ -7,7 +7,8 @@ import {MusicRemoteComponent} from "../musicremote/musicremote.component";
 const routes: Routes = [
   { path: 'musiclists', component: MusicListComponent },
   { path: 'musicstreaming', component: MusicStreamingComponent},
-  { path: 'musicremote', component: MusicRemoteComponent}
+  { path: 'musicremote', component: MusicRemoteComponent},
+  { path: '**', component: MusicListComponent }
 ];
 
 @NgModule({
