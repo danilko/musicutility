@@ -5,13 +5,12 @@ import com.musicutility.persistence.model.*;
 import com.musicutility.persistence.repo.IRReceiverSettingRepository;
 import com.musicutility.web.MusicPlayerController;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 public class IRReceiverComponent implements Runnable, SerialPortDataListener {
 
@@ -24,14 +23,15 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
     private static String LAST = "LAST";
     private static String NETWORK_ON = "NETWORK_ON";
     private static String NETWORK_OFF = "NETWORK_OFF";
+    private static String TTYACM = "_TTYACM";
 
     private boolean previousStop;
 
     StringBuffer input = null;
-    String lastState = "";
-    int triggerCount = 0;
     IRReceieverSetting receiverSetting;
     MusicPlayerController musicPlayerController;
+
+    boolean inputTrigger;
 
     // From https://www.mkyong.com/java/how-to-detect-os-in-java-systemgetpropertyosname/
     private static String OS = System.getProperty("os.name").toLowerCase();
@@ -48,15 +48,18 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
     @Override
     public void run() {
         while (true) {
-            String portName = "";
-            for (int index = 0; index < SerialPort.getCommPorts().length; index++) {
-                if (SerialPort.getCommPorts()[index].getSystemPortName().contains("ttyACM")) {
-                    portName = SerialPort.getCommPorts()[index].getSystemPortName();
-                    break;
+            String portName = receiverSetting.getPortName();
+            if (StringUtils.isBlank(portName)) {
+                // Only scan if portName not given
+                for (int index = 0; index < SerialPort.getCommPorts().length; index++) {
+                    if (SerialPort.getCommPorts()[index].getSystemPortName().contains(receiverSetting.getPortPrefix())) {
+                        portName = SerialPort.getCommPorts()[index].getSystemPortName();
+                        break;
+                    }
                 }
             }
 
-            if (portName != "") {
+            if (StringUtils.isNotBlank(portName)) {
                 SerialPort comPort = SerialPort.getCommPort("/dev/" + portName);
                 LOGGER.info("Serial Port for IR Remote detect:" + portName);
                 comPort.openPort();
@@ -64,15 +67,42 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
                 comPort.setComPortTimeouts(SerialPort.TIMEOUT_READ_BLOCKING, 1, 0);
                 comPort.addDataListener(this);
 
+                inputTrigger = false;
+
                 try {
                     while (true) {
-                        Thread.sleep(5000);
+                        Thread.sleep(100);
+
+                        // If input did trigger
+                        if (inputTrigger) {
+                            // Wait for 500 milliseconds to complete all input
+                            Thread.sleep(1000);
+                            inputTrigger = false;
+                            // Clean up the input
+                            String cleanupInput = input.toString().split("\n")[0]
+                                    .replace("\n", "")
+                                    .replace("\r", "");
+                            String currentState = scanCodeState(cleanupInput);
+
+                            // Clean the input for next input
+                            input = null;
+
+                            if (StringUtils.isNotBlank(currentState)) {
+
+                                LOGGER.debug("Log Command: " + currentState);
+
+                                triggerCommand(currentState);
+                            }
+                        }
+
                         if (!comPort.isOpen()) {
                             break;
                         }
 
                     }
                 } catch (Exception exception) {
+                    inputTrigger = false;
+
                     LOGGER.info("remote exception OUTPUT " + exception.toString());
                 }
 
@@ -95,99 +125,97 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
 
     @Override
     public void serialEvent(SerialPortEvent serialPortEvent) {
-        if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
-            byte[] newData = serialPortEvent.getReceivedData();
+        try {
+            if (serialPortEvent.getEventType() == SerialPort.LISTENING_EVENT_DATA_RECEIVED) {
+                byte[] newData = serialPortEvent.getReceivedData();
 
-            if (input == null) {
-                input = new StringBuffer();
-            }
-
-            boolean completeData = false;
-            String message = new String(newData);
-
-            if (message.contains("\n")) {
-                input.append(message);
-                completeData = true;
-            } else {
-                input.append(message);
-            }
-
-
-            if (completeData) {
-                String command = input.toString().split("\r\n")[0];
-                input = null;
-
-                String currentState = "";
-
-                if (receiverSetting.getFastBackwardList().contains(command)) {
-                    currentState = FAST_BACKWARD;
-                } else if (receiverSetting.getFastForwardList().contains(command)) {
-                    currentState = FAST_FORWARD;
-                } else if (receiverSetting.getPlayList().contains(command)) {
-                    currentState = PLAY;
-                } else if (receiverSetting.getStopList().contains(command)) {
-                    currentState = STOP;
-                } else if (receiverSetting.getPauseList().contains(command)) {
-                    currentState = PAUSE;
-                } else if (receiverSetting.getLastList().contains(command)) {
-                    currentState = LAST;
-                } else if (receiverSetting.getNextList().contains(command)) {
-                    currentState = NEXT;
-                } else if (receiverSetting.getNetworkOnList().contains(command)) {
-                    currentState = NETWORK_ON;
-                } else if (receiverSetting.getNetworkOffList().contains(command)) {
-                    currentState = NETWORK_OFF;
-                } else {
-                    // As command not found, skip processing it
-                    return;
+                // Empty out if command prefix is not null
+                if (input == null) {
+                    // This is a new command due to command prefix
+                    // or previous input is already clean to null, so clean the previous input
+                    input = new StringBuffer();
                 }
 
-                boolean triggerCommand = false;
+                String message = "";
 
-                // Ignore the immediate second input
-                if ((currentState == lastState) && triggerCount == 0) {
-                    triggerCommand = true;
-                    triggerCount++;
-                } else {
-                    triggerCount = 0;
-                }
+                // If no hex decode, the decode it
+                if (! receiverSetting.getIsHexDecode()) {
 
-                lastState = currentState;
-
-                if (triggerCommand) {
-                    try {
-                        MusicPlayerSetting setting = musicPlayerController.getCurrentMusicPlayerSetting();
-                        MusicPlayerState state = musicPlayerController.getCurrentMusicPlayerState();
-                        // As no list select, return
-                        if (setting.getCurrentMusicList() == null) {
-                            return;
-                        }
-
-                        if (currentState == FAST_FORWARD) {
-                            setFastForward(setting, state);
-                        } else if (currentState == FAST_BACKWARD) {
-                            setFastBackward(setting, state);
-                        } else if (currentState == PLAY) {
-                            setPlay(setting, state);
-                        } else if (currentState == STOP) {
-                            setStop(setting);
-                        } else if (currentState == PAUSE) {
-                            setPause(setting, state);
-                        } else if (currentState == NEXT) {
-                            setNextMusicFile(setting);
-                        } else if (currentState == LAST) {
-                            setLastMusicFile(setting);
-                        } else if (currentState == NETWORK_ON) {
-                            toggletNetwork(true);
-                        } else if (currentState == NETWORK_OFF) {
-                            toggletNetwork(false);
-                        }
-                    } catch (Exception exception) {
-                        LOGGER.info("Remote exception occur, will skip this execution");
+                    for (byte aByte : newData) {
+                        // Hex format
+                        message = message + String.format("%02x", aByte);
                     }
+                } else {
+                    // Otherwise just use the byte to string as is
+                    message = new String(newData);
                 }
 
+                input.append(message);
+
+                inputTrigger = true;
             }
+        } catch (Exception exception) {
+            LOGGER.error("Exception during execution of remote " + exception.toString());
+        }
+    }
+
+    private String scanCodeState(String code) {
+        // Default return state is null
+        String currentState = "";
+
+        if (receiverSetting.getFastBackwardList().contains(code)) {
+            currentState = FAST_BACKWARD;
+        } else if (receiverSetting.getFastForwardList().contains(code)) {
+            currentState = FAST_FORWARD;
+        } else if (receiverSetting.getPlayList().contains(code)) {
+            currentState = PLAY;
+        } else if (receiverSetting.getStopList().contains(code)) {
+            currentState = STOP;
+        } else if (receiverSetting.getPauseList().contains(code)) {
+            currentState = PAUSE;
+        } else if (receiverSetting.getLastList().contains(code)) {
+            currentState = LAST;
+        } else if (receiverSetting.getNextList().contains(code)) {
+            currentState = NEXT;
+        } else if (receiverSetting.getNetworkOnList().contains(code)) {
+            currentState = NETWORK_ON;
+        } else if (receiverSetting.getNetworkOffList().contains(code)) {
+            currentState = NETWORK_OFF;
+        }
+
+        return currentState;
+    }
+
+    private void triggerCommand(String currentState) {
+        try {
+            MusicPlayerSetting setting = musicPlayerController.getCurrentMusicPlayerSetting();
+            MusicPlayerState state = musicPlayerController.getCurrentMusicPlayerState();
+            // As no list select, return
+            if (setting.getCurrentMusicList() == null) {
+                return;
+            }
+
+            if (currentState == FAST_FORWARD) {
+                setFastForward(setting, state);
+            } else if (currentState == FAST_BACKWARD) {
+                setFastBackward(setting, state);
+            } else if (currentState == PLAY) {
+                setPlay(setting, state);
+            } else if (currentState == STOP) {
+                setStop(setting);
+            } else if (currentState == PAUSE) {
+                setPause(setting, state);
+            } else if (currentState == NEXT) {
+                setNextMusicFile(setting);
+            } else if (currentState == LAST) {
+                setLastMusicFile(setting);
+            } else if (currentState == NETWORK_ON) {
+                toggletNetwork(true);
+            } else if (currentState == NETWORK_OFF) {
+                toggletNetwork(false);
+            }
+        } catch (Exception exception) {
+            LOGGER.info("Remote exception occur, will skip this execution");
         }
     }
 
@@ -320,7 +348,7 @@ public class IRReceiverComponent implements Runnable, SerialPortDataListener {
                 }
             }
         } catch (Exception exception) {
-            LOGGER.info("Error in disabling network service " + exception.toString());
+            LOGGER.error("Error in disabling network service " + exception.toString());
         }
     }
 }

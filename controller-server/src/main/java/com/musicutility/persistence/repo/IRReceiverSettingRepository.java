@@ -66,6 +66,22 @@ public class IRReceiverSettingRepository {
     }
 
     public void defaultRemoteSetting() {
+        if (receieverSetting.getPortName() == null) {
+            receieverSetting.setPortName("");
+        }
+
+        if (receieverSetting.getPortPrefix() == null) {
+            receieverSetting.setPortPrefix("ttyACM");
+        }
+
+        if (receieverSetting.getVendor() == null) {
+            receieverSetting.setVendor("PHILIP_RC5_TTYACM");
+        }
+
+        if (receieverSetting.getIsHexDecode() == null) {
+            receieverSetting.setIsHexDecode(true);
+        }
+
         if (receieverSetting.getFastForwardList() == null) {
             List<String> fastForwardList = new ArrayList<>();
             fastForwardList.add("D34");

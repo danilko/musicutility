@@ -7,6 +7,11 @@ public class IRReceieverSetting implements Serializable {
 
     private static final long serialVersionUID = 1370611330468210859L;
 
+    private String portPrefix;
+    private String portName;
+    private Boolean isHexDecode;
+    private String vendor;
+
     private List<String> fastForwardList;
     private List<String> fastBackwardList;
     private List<String> playList;
@@ -17,9 +22,19 @@ public class IRReceieverSetting implements Serializable {
     private List<String> networkOnList;
     private List<String> networkOffList;
 
-    public IRReceieverSetting() {
-        super();
-    }
+    public IRReceieverSetting() {  super();  }
+
+    public String getPortPrefix() { return portPrefix; }
+
+    public void setPortPrefix(String portPrefix) { this.portPrefix = portPrefix; }
+
+    public String getPortName() { return portName;  }
+
+    public void setPortName(String portName) { this.portName = portName; }
+
+    public String getVendor() { return vendor; }
+
+    public void setVendor(String vendor) { this.vendor = vendor; }
 
     public void setFastForwardList(List<String> fastForwardList) {this.fastForwardList = fastForwardList;}
 
@@ -87,6 +102,10 @@ public class IRReceieverSetting implements Serializable {
         return networkOffList;
     }
 
+    public Boolean getIsHexDecode() { return isHexDecode; }
+
+    public void setIsHexDecode(Boolean isHexDecode) { this.isHexDecode = isHexDecode; }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -94,6 +113,10 @@ public class IRReceieverSetting implements Serializable {
 
         IRReceieverSetting that = (IRReceieverSetting) o;
 
+        if (portPrefix != null ? !portPrefix.equals(that.portPrefix) : that.portPrefix != null) return false;
+        if (portName != null ? !portName.equals(that.portName) : that.portName != null) return false;
+        if (isHexDecode != null ? !isHexDecode.equals(that.isHexDecode) : that.isHexDecode != null) return false;
+        if (vendor != null ? !vendor.equals(that.vendor) : that.vendor != null) return false;
         if (fastForwardList != null ? !fastForwardList.equals(that.fastForwardList) : that.fastForwardList != null)
             return false;
         if (fastBackwardList != null ? !fastBackwardList.equals(that.fastBackwardList) : that.fastBackwardList != null)
@@ -110,7 +133,11 @@ public class IRReceieverSetting implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = fastForwardList != null ? fastForwardList.hashCode() : 0;
+        int result = portPrefix != null ? portPrefix.hashCode() : 0;
+        result = 31 * result + (portName != null ? portName.hashCode() : 0);
+        result = 31 * result + (isHexDecode != null ? isHexDecode.hashCode() : 0);
+        result = 31 * result + (vendor != null ? vendor.hashCode() : 0);
+        result = 31 * result + (fastForwardList != null ? fastForwardList.hashCode() : 0);
         result = 31 * result + (fastBackwardList != null ? fastBackwardList.hashCode() : 0);
         result = 31 * result + (playList != null ? playList.hashCode() : 0);
         result = 31 * result + (stopList != null ? stopList.hashCode() : 0);
