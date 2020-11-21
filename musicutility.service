@@ -6,7 +6,9 @@ After=syslog.target
 SyslogIdentifier=musicutility	
 WorkingDirectory=/home/atomicpi/application/
 ExecStart=/bin/bash -c "export MUSIC_LOCATION='/srv/public/mount/'; export LC_ALL='en_US.UTF-8'; java -jar /home/atomicpi/application/controller.jar"
-User=atomicpi
-Type=simple
+User=musicutility
+RestartSec=5s
+Restart=on-failure
+
 [Install]
 WantedBy=multi-user.target

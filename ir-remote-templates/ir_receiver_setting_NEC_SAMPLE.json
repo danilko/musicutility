@@ -1,0 +1,15 @@
+{
+  "portPrefix" : "",
+  "portName" : "ttyUSB0",
+  "isHexDecode" : false,
+  "vendor" : "NEC_SAMPLE",
+  "fastForwardList" : [ "5f81bf01" ],
+  "fastBackwardList" : [ "5f81bf" ],
+  "playList" : [ "5f81ba01" ],
+  "stopList" : [ "5f811701" ],
+  "pauseList" : [ "5f81bb09" ],
+  "nextList" : [ "5f8101" ],
+  "lastList" : [ "5f8103" ],
+  "networkOnList" : [ "5f81bb02" ],
+  "networkOffList" : [ "5f81ba0b" ]
+}

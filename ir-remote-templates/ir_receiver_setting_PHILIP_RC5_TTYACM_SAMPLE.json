@@ -1,0 +1,15 @@
+{
+  "portPrefix" : "ttyACM",
+  "portName" : "",
+  "isHexDecode" : true,
+  "vendor" : "PHILIP_RC5_TTYACM",
+  "fastForwardList" : [ "D34", "534" ],
+  "fastBackwardList" : [ "532", "D32" ],
+  "playList" : [ "535", "D35" ],
+  "stopList" : [ "536", "D36" ],
+  "pauseList" : [ "530", "D30" ],
+  "nextList" : [ "520", "D20" ],
+  "lastList" : [ "521", "D21" ],
+  "networkOnList" : [ "6BD5ADFF", "5860F6F8" ],
+  "networkOffList" : [ "531", "D31" ]
+}

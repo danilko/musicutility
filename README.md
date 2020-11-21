@@ -36,12 +36,17 @@ Frontend Technology
 ------
 - Angular/Angular Material
 
+IR Technology
+------
+- JSerial https://fazecast.github.io/jSerialComm/
+
 Compile Setting
 ------
-Following is an example setup
+Following is an example compile
 ```
 # need to install latest npm/angular CLI (detail in controller-web/src/main/web/)
 # in git root folder
+# note it may need to compile twice in order for the war to package the final javascript
 mvn clean package
 # collect the final artificat controller.jar from controller-server/target
 ```
@@ -56,3 +61,7 @@ java -jar controller.jar
 # one can the access at http://localhost:8080/
 ```
 
+IR Remote Template
+------
+In the `ir-remote-template`, one can check the sample for IR config and generate one for their own purpose
+Replace the `ir_receiver_setting.json` in `MUSIC_LOCATION`, and restart the `musicutility` system to take effect
