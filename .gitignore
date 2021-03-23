@@ -2,5 +2,6 @@ node_modules/
 controller-web/src/main/web/node_modules/
 controller-web/src/main/web/dist/
 controller-web/src/main/web/node/
+controller-web/src/main/web/package-lock.json
 controller-web/target/
 controller-server/target/
