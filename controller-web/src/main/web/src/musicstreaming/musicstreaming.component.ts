@@ -20,12 +20,12 @@ export class MusicStreamingComponent implements OnInit {
   currentMusicFile: MusicFile;
   currentMusicFileUrl : String;
 
-  musiclists: MusicList[];
-  musiclist: MusicList;
+  musiclists: MusicList[] = new Array<MusicList>();
+  musiclist: MusicList = new MusicList();
 
   audio:any;
 
-  @ViewChild('audioPlayer', {static: false}) audioPlayer: ElementRef;
+  @ViewChild('audioPlayer') audioPlayer: ElementRef | undefined;
 
   constructor(private musiclistService: MusicListService,
               public dialog: MatDialog) {

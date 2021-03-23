@@ -1,18 +1,10 @@
-# Angularclient
+# Web
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-Reference from `https://dzone.com/articles/angular-2-and-spring-boot-development-environment`
-
-If development with java backend server on 8080, please then run 
-`ng serve --proxy-config proxy.conf.json`
-
-If not 8080, please then modify as needed in `proxy.conf.json`
-
 
 ## Code scaffolding
 
@@ -32,4 +24,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

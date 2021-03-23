@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MusicListComponent } from '../musiclist/musiclist.component';
+import {NgModule } from '@angular/core';
+import {RouterModule, Routes } from '@angular/router';
+import {MusicListComponent} from "../musiclist/musiclist.component";
 import {MusicStreamingComponent} from "../musicstreaming/musicstreaming.component";
 import {MusicRemoteComponent} from "../musicremote/musicremote.component";
 

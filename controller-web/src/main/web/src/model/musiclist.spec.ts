@@ -1,7 +1,7 @@
-import { Musiclist } from './musiclist';
+import { MusicList } from './musiclist';
 
 describe('Musiclist', () => {
   it('should create an instance', () => {
-    expect(new Musiclist()).toBeTruthy();
+    expect(new MusicList()).toBeTruthy();
   });
 });

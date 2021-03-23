@@ -13,18 +13,18 @@
       [step]=1
       [thumbLabel]=true
       [(ngModel)]="currentMusicPlayerState.elapsedPercentage"
-      (input)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, true, $event.value)">
+      (input)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, true, $event.value || 0)">
     </mat-slider>
 
     <div>{{currentMusicPlayerState.elaspsedTime}} ({{currentMusicPlayerState.elapsedPercentage}}.00%)</div>
 
-    <button mat-icon-button aria-label="Play" *ngIf="currentMusicPlayerState.playing == false" (click)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, true, currentMusicPlayerState.elapsedPercentage)">
+    <button mat-icon-button aria-label="Play" *ngIf="currentMusicPlayerState.playing == 0" (click)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, true, currentMusicPlayerState.elapsedPercentage)">
       <mat-icon>play_arrow</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Pause" *ngIf="currentMusicPlayerState.playing == true" (click)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, false, currentMusicPlayerState.elapsedPercentage)">
+    <button mat-icon-button aria-label="Pause" *ngIf="currentMusicPlayerState.playing == 1" (click)="updateMusicPlayerSetting(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, false, currentMusicPlayerState.elapsedPercentage)">
       <mat-icon>pause</mat-icon>
     </button>
-    <button mat-icon-button aria-label="Stop" *ngIf="currentMusicPlayerState.playing == true" (click)="updateMusicPlayerSettingwithStop(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, false, currentMusicPlayerState.elapsedPercentage)">
+    <button mat-icon-button aria-label="Stop" *ngIf="currentMusicPlayerState.playing == 0" (click)="updateMusicPlayerSettingwithStop(currentMusicPlayerState.musicPlayerSetting.currentMusicList, currentMusicPlayerState.musicPlayerSetting.currentMusicFile, currentMusicPlayerState.musicPlayerSetting.currentMusicMixer, false, currentMusicPlayerState.elapsedPercentage)">
       <mat-icon>stop</mat-icon>
     </button>
 

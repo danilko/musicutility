@@ -1,0 +1,5 @@
+node_modules/
+controller-web/src/main/web/node_modules/
+controller-web/src/main/web/dist/
+controller-web/target/
+controller-server/target/

@@ -1,7 +1,7 @@
-import { Musicfile } from './musicfile';
+import { MusicFile } from './musicfile';
 
-describe('Musicfile', () => {
+describe('MusicFile', () => {
   it('should create an instance', () => {
-    expect(new Musicfile()).toBeTruthy();
+    expect(new MusicFile()).toBeTruthy();
   });
 });

@@ -26,9 +26,9 @@ export class MusicListComponent implements OnInit {
 
   currentMusicList: MusicList;
 
-  musiclists: MusicList[];
-  musicfiles: MusicFile[];
-  musiclist: MusicList;
+  musiclists: MusicList[] | undefined;
+  musicfiles: MusicFile[] | undefined;
+  musiclist: MusicList | undefined;
 
   constructor(private musiclistService: MusicListService,
               private musicfileService: MusicFileService,

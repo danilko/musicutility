@@ -25,13 +25,13 @@ import {MusicPlayerSetting} from "../model/musicplayersetting";
   styleUrls: ['./musicremote.component.css']
 })
 export class MusicRemoteComponent implements OnInit, OnDestroy {
-  currentMusicList: MusicList;
-  currentMusicFile: MusicFile;
-  currentMusicMixer: MusicMixer;
-  currentMusicPlayerState: MusicPlayerState;
+  currentMusicList: MusicList  = new MusicList();
+  currentMusicFile: MusicFile  = new MusicFile();
+  currentMusicMixer: MusicMixer  = new MusicMixer();
+  currentMusicPlayerState: MusicPlayerState  = new MusicPlayerState();
 
-  musiclists: MusicList[];
-  musicmixers: MusicMixer[];
+  musiclists: MusicList[] = new Array<MusicList>();
+  musicmixers: MusicMixer[] = new Array<MusicMixer>();
 
   currentPlaySetting:boolean;
   previousStop:boolean;
@@ -90,7 +90,7 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
     updateMusicPlayerSetting.currentMusicList = musiclist;
 
     if(musicfile == null) {
-        updateMusicPlayerSetting.currentMusicFile = updateMusicPlayerSetting.currentMusicList[0];
+        updateMusicPlayerSetting.currentMusicFile = updateMusicPlayerSetting.currentMusicList.musicFiles[0];
       }
       else
       {
@@ -129,7 +129,7 @@ export class MusicRemoteComponent implements OnInit, OnDestroy {
   }
 
   async delay(ms: number) {
-    await new Promise(resolve => setTimeout(()=>resolve(), ms)).then(()=>console.log("fired"));
+    await new Promise(resolve => setTimeout(()=>resolve(""), ms)).then(()=>console.log("fired"));
   }
 
   getMusicPlayerState(){
